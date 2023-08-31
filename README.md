@@ -1,6 +1,6 @@
 # mahindra-sys
 ~ Software Engineering 2 project
 
-✅ Connected with Database (MySql)
-✅ Static Files configured
-✅ Connected with Bootstrap 5 Framework
+✅ Connected with Database (MySql) <br>
+✅ Static Files configured <br>
+✅ Connected with Bootstrap 5 Framework <br>
