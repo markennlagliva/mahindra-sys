@@ -1,5 +1,6 @@
 # mahindra-sys
 ~ Software Engineering 2 project
 
-~ static and template configuration
-~ bootstrap installation
+✅ Connected with Database (MySql)
+✅ Static Files configured
+✅ Connected with Bootstrap 5 Framework
