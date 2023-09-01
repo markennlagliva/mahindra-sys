@@ -1,5 +1,5 @@
 # mahindra-sys
-~ Software Engineering 2 project
+~ Software Engineering 2 project <br>
 ~ Developing simple Face Recognition Attendance
 
 ✅ Connected with Database (MySql) <br>
