@@ -4,3 +4,5 @@
 ✅ Connected with Database (MySql) <br>
 ✅ Static Files configured <br>
 ✅ Connected with Bootstrap 5 Framework <br>
+
+✅ Livereload dependency installed
