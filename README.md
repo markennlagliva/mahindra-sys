@@ -5,4 +5,4 @@
 ✅ Static Files configured <br>
 ✅ Connected with Bootstrap 5 Framework <br>
 
-✅ Livereload dependency installed
+✅ Django-Livereload-server dependency installed
