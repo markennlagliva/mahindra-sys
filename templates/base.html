@@ -27,7 +27,11 @@
         </div>
 
         <div class="row justify-content-center">
-            <img class="img-fluid w-50 h-auto" src="{% static 'assets/logo.jpg' %}" alt="">
+            <div class="col-5">
+                <a href="{% url 'home' %}">
+                    <img class="img-fluid" src="{% static 'assets/logo.jpg' %}" alt="logo">
+                </a>
+            </div>
         </div>
     </header>
     <nav>
@@ -35,19 +39,17 @@
     </nav>
 
 
-    <main class="container">
-        {% block content %}  
-            <div class="row justify-content-center">
-                <div class="col">
-                    <a href="{% url 'administrator' %}">Administrator</a>
-                </div>
+    <main class="container-fluid">
+            <div class="row">
+                {% block content %}
+                    <div class="mb-3 text-center">
+                        <a class="btn btn-danger" href="{% url 'administrator' %}">Administrator</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="btn btn-danger px-4" href="{% url 'employee' %}">Employee</a>
+                    </div>
+                {% endblock %}
             </div>
-            <div class="row justify-content-center">
-                <div class="col">
-                    <a href="{% url 'employee' %}">Employee</a>
-                </div>
-            </div>
-        {% endblock %}  
     </main>
 
 
