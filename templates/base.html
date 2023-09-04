@@ -36,13 +36,18 @@
 
 
     <main class="container">
-        <div class="row justify-content-center">
-            <div class="col">
-                {% block content %}
-                    <a href="{% url 'child/administration.html' %}">hello</a>
-                {% endblock %}
+        {% block content %}  
+            <div class="row justify-content-center">
+                <div class="col">
+                    <a href="{% url 'administrator' %}">Administrator</a>
+                </div>
             </div>
-        </div>
+            <div class="row justify-content-center">
+                <div class="col">
+                    <a href="{% url 'employee' %}">Employee</a>
+                </div>
+            </div>
+        {% endblock %}  
     </main>
 
 

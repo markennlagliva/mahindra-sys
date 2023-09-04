@@ -5,7 +5,7 @@ def home(request):
     return render(request, 'base.html')
 
 def administrator(request):
-    return render(request, 'child/administration.html')
+    return render(request, 'administrator.html')
 
 def employee(request):
-    return render(request, 'child/employee.html')
+    return render(request, 'employee.html')
