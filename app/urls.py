@@ -7,4 +7,6 @@ urlpatterns = [
     path('employee/', views.employee, name='employee'),
     path('adminpanel/', views.adminpanel, name='adminpanel'),
     # path for admin page SUCCESS
+
+    path('register/', views.register, name='register')
 ]
