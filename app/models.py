@@ -12,7 +12,7 @@ class Registered(models.Model):
         ('F', 'Female'),
     )
 
-    userId = models.IntegerField(validators=[MaxValueValidator(300000)])
+    userid = models.IntegerField(validators=[MaxValueValidator(300000)])
     firstname_and_middlename = models.CharField(max_length=30)
     lastname = models.CharField(max_length=50)
     age = models.IntegerField(validators=[MaxValueValidator(65)])
