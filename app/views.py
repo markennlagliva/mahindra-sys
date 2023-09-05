@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import AdminInput, EmployeeInput
+from .forms import Registered
 
 # Create your views here.
 def home(request):
@@ -20,10 +20,10 @@ def adminpanel(request):
 
 def register(request):
     if request.method == 'POST':
-        form = AdminInput(request.POST)
+        form = Registered(request.POST)
         if form.is_valid():
             form.save()
             return redirect('base.html')
     else:
-        form = AdminInput()
+        form = Registered()
     return render(request, 'register.html', {'form': form})
