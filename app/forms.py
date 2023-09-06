@@ -1,9 +1,14 @@
 from django import forms
-from .models import Registered
+from .models import AdminRegister, EmployeeRegister
 
-class Registered(forms.ModelForm):
+class RegisteredAdmin(forms.ModelForm):
     class Meta:
-        model = Registered
+        model = AdminRegister
+        fields = "__all__"
+
+class RegisteredEmployee(forms.ModelForm):
+    class Meta:
+        model = EmployeeRegister
         fields = "__all__"
 
 #Registration DB

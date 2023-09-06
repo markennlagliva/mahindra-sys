@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
-from .forms import Registered
+from .forms import RegisteredAdmin
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
@@ -7,7 +9,19 @@ def home(request):
 
 def administrator(request):
     #Authentication Here... Pull data from DB
-    return render(request, 'administrator.html')
+    if request.method == "POST":
+        userid = request.POST["userid"]
+        password = request.POST["password"]
+        user = authenticate(request, userid=userid, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('base')
+        else:
+            messages.success(request, ("There was an Error, Credentials may not be exist"))
+            return redirect('administrator')
+    else:
+        return render(request, 'administrator.html', {})
    
 
 def employee(request):
@@ -15,15 +29,18 @@ def employee(request):
     return render(request, 'employee.html')
 
 
-def adminpanel(request):
-    return render(request, 'account/admin.html')
+def admin_dashboard(request):
+    return render(request, 'admin/admin_dashboard.html')
 
-def register(request):
+def registeradmin(request):
     if request.method == 'POST':
-        form = Registered(request.POST)
+        form = RegisteredAdmin(request.POST)
         if form.is_valid():
             form.save()
             return redirect('base.html')
     else:
-        form = Registered()
+        form = RegisteredAdmin()
     return render(request, 'register.html', {'form': form})
+
+def registeremployee(request):
+    pass
