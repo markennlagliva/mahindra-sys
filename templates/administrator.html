@@ -9,6 +9,11 @@
     <div class="mb-3 text-center">
         <span class="btn btn-danger">Administrator</span>
     </div>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
     <form action="POST">
         <div class="d-flex align-items-center flex-column" >
             <div class="d-flex align-items center flex-column">
