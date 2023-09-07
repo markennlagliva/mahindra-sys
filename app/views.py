@@ -25,25 +25,38 @@ def administrator(request):
             verify = record.userid == int(id) and record.password == password
             if verify:
                 return redirect('admin_dashboard')
-  
             else:
                 messages.success(request, ("There was an Error, Credentials may not be exist!"))
                 return redirect('administrator')
     else:
-        return render(request, 'administrator.html', {'loop':'This is the bottom'})
-    
-
-    # return render(request, 'administrator.html', {'all_records':user})
-
+        return render(request, 'administrator.html')
    
 
 def employee(request):
     #Authentication Here... Pull data from DB
-    return render(request, 'employee.html')
+    if request.method == "POST":
+        id = request.POST["userid"]
+        password = request.POST["password"]
+
+        #CUSTOM AUTHENTICATION
+        user = EmployeeRegister.objects.filter(userid=id)
+        for record in user:
+            if record.userid == int(id) and record.password == password:
+                return redirect('employee_dashboard')
+            else:
+                messages.success(request, ("There was an Error, Credentials may not be exist!"))
+                return redirect('employee')
+    else:
+        return render(request, 'employee.html')
+
+    
 
 
 def admin_dashboard(request):
     return render(request, 'admins/admin_dashboard.html')
+
+def employee_dashboard(request):
+    return render(request, 'employee/employee_dashboard.html')
 
 def registeradmin(request):
     if request.method == 'POST':

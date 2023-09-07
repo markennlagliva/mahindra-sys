@@ -8,6 +8,7 @@ urlpatterns = [
 
     # path for admin page SUCCESS
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('employee_dashboard/', views.employee_dashboard, name='employee_dashboard'),
 
     path('register_admin/', views.registeradmin, name='register_admin'),
     path('register_employee/', views.registeremployee, name='register_employee'),
