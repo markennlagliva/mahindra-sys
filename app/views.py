@@ -1,6 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from .forms import RegisteredAdmin
 from django.contrib.auth import authenticate, login
+from django.urls import reverse
 from django.contrib import messages
 
 # Create your views here.
@@ -14,14 +15,14 @@ def administrator(request):
         password = request.POST["password"]
         user = authenticate(request, userid=userid, password=password)
 
-        if user is not None:
+        if user:
             login(request, user)
-            return redirect('base')
+            return redirect('admin_dashboard')
         else:
-            messages.success(request, ("There was an Error, Credentials may not be exist"))
+            messages.success(request, ("There was an Error, Credentials may not be exist!"))
             return redirect('administrator')
     else:
-        return render(request, 'administrator.html', {})
+        return render(request, 'administrator.html')
    
 
 def employee(request):
@@ -30,7 +31,7 @@ def employee(request):
 
 
 def admin_dashboard(request):
-    return render(request, 'admin/admin_dashboard.html')
+    return render(request, 'admins/admin_dashboard.html')
 
 def registeradmin(request):
     if request.method == 'POST':
