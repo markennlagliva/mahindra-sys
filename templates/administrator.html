@@ -16,6 +16,10 @@
                     {{ message }}
                 {% endfor %}
             {% endif %}
+
+            {% for record in all_records %}
+                {{record.userid}} : {{record.lastname}}
+            {% endfor %}
         </div>
       </div>
 

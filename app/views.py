@@ -3,26 +3,38 @@ from .forms import RegisteredAdmin
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.contrib import messages
+from .models import AdminRegister, EmployeeRegister
+
+
+
+
 
 # Create your views here.
 def home(request):
     return render(request, 'base.html')
 
 def administrator(request):
-    #Authentication Here... Pull data from DB
+     #Authentication Here... Pull data from DB
     if request.method == "POST":
-        userid = request.POST["userid"]
+        id = request.POST["userid"]
         password = request.POST["password"]
-        user = authenticate(request, userid=userid, password=password)
 
-        if user:
-            login(request, user)
-            return redirect('admin_dashboard')
-        else:
-            messages.success(request, ("There was an Error, Credentials may not be exist!"))
-            return redirect('administrator')
+        #CUSTOM AUTHENTICATION
+        user = AdminRegister.objects.filter(userid=id)
+        for record in user:
+            verify = record.userid == int(id) and record.password == password
+            if verify:
+                return redirect('admin_dashboard')
+  
+            else:
+                messages.success(request, ("There was an Error, Credentials may not be exist!"))
+                return redirect('administrator')
     else:
-        return render(request, 'administrator.html')
+        return render(request, 'administrator.html', {'loop':'This is the bottom'})
+    
+
+    # return render(request, 'administrator.html', {'all_records':user})
+
    
 
 def employee(request):
