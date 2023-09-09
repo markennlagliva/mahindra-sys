@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from .forms import RegisteredAdmin
+from .forms import RegisteredAdmin, RegisteredEmployee
 from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.contrib import messages
@@ -24,7 +24,7 @@ def administrator(request):
         for record in user:
             verify = record.userid == int(id) and record.password == password
             if verify:
-                return redirect('admin_dashboard')
+                return render(request, 'admins/admin_dashboard.html', {'user':record})
             else:
                 messages.success(request, ("There was an Error, Credentials may not be exist!"))
                 return redirect('administrator')
@@ -51,14 +51,12 @@ def employee(request):
 
     
 
-
+# ADMIN DASHBOARD
 def admin_dashboard(request):
     return render(request, 'admins/admin_dashboard.html')
 
-def employee_dashboard(request):
-    return render(request, 'employee/employee_dashboard.html')
 
-def registeradmin(request):
+def register_admin(request):
     if request.method == 'POST':
         form = RegisteredAdmin(request.POST)
         if form.is_valid():
@@ -66,7 +64,22 @@ def registeradmin(request):
             return redirect('base.html')
     else:
         form = RegisteredAdmin()
-    return render(request, 'register.html', {'form': form})
+    return render(request, 'admins/_register_admin.html', {'form': form})
 
-def registeremployee(request):
-    pass
+def register_employee(request):
+    if request.method == 'POST':
+        form = RegisteredEmployee(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('base.html')
+    else:
+        form = RegisteredEmployee()
+    return render(request, 'admins/_register_employee.html', {'form': form})
+
+def edit_profile(request):
+    return render(request, 'admins/_edit_profile.html')
+
+
+# EMPLOYEE DASHBOARD
+def employee_dashboard(request):
+    return render(request, 'employee/employee_dashboard.html')
