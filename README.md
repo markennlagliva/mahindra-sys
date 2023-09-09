@@ -7,3 +7,8 @@
 ✅ Connected with Bootstrap 5 Framework <br>
 
 ✅ Django-Livereload-server dependency installed
+
+Dependencies <br>
+- pipenv <br>
+- django <br>
+- django-livereload-server <br>
