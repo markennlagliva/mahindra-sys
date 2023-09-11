@@ -1,13 +1,12 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from .forms import RegisteredAdmin, RegisteredEmployee
-from django.contrib.auth import authenticate, login
+from .forms import CreateUserForm
+from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib import messages
-from .models import AdminRegister, EmployeeRegister
+from .models import ExtendUser
 
-
-
-
+#restriction
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -15,71 +14,86 @@ def home(request):
 
 def administrator(request):
      #Authentication Here... Pull data from DB
-    if request.method == "POST":
-        id = request.POST["userid"]
-        password = request.POST["password"]
-
-        #CUSTOM AUTHENTICATION
-        user = AdminRegister.objects.filter(userid=id)
-        for record in user:
-            verify = record.userid == int(id) and record.password == password
-            if verify:
-                return render(request, 'admins/admin_dashboard.html', {'user':record})
-            else:
-                messages.success(request, ("There was an Error, Credentials may not be exist!"))
-                return redirect('administrator')
+    if request.user.is_authenticated:
+        return redirect('admin_dashboard')
     else:
-        return render(request, 'administrator.html')
+        if request.method == "POST":
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('admin_dashboard')
+            else:
+                messages.info(request, 'Username or Password is incorrect...')
+        
+        context = {}
+        return render(request, 'administrator.html', context)
    
 
 def employee(request):
-    #Authentication Here... Pull data from DB
-    if request.method == "POST":
-        id = request.POST["userid"]
-        password = request.POST["password"]
 
-        #CUSTOM AUTHENTICATION
-        user = EmployeeRegister.objects.filter(userid=id)
-        for record in user:
-            if record.userid == int(id) and record.password == password:
+    #Authentication Here... Pull data from DB
+    if request.user.is_authenticated:
+        return redirect('employee_dashboard')
+    else:
+        if request.method == "POST":
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
                 return redirect('employee_dashboard')
             else:
-                messages.success(request, ("There was an Error, Credentials may not be exist!"))
-                return redirect('employee')
-    else:
+                messages.info(request, 'Username or Password is incorrect...')
+    
         return render(request, 'employee.html')
 
     
 
 # ADMIN DASHBOARD
+@login_required(login_url='home')
 def admin_dashboard(request):
     return render(request, 'admins/admin_dashboard.html')
 
-
+@login_required(login_url='home')
 def register_admin(request):
     if request.method == 'POST':
-        form = RegisteredAdmin(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('base.html')
     else:
-        form = RegisteredAdmin()
+        form = CreateUserForm()
     return render(request, 'admins/_register_admin.html', {'form': form})
 
+
+@login_required(login_url='home')
 def register_employee(request):
     if request.method == 'POST':
-        form = RegisteredEmployee(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('base.html')
     else:
-        form = RegisteredEmployee()
+        form = CreateUserForm()
     return render(request, 'admins/_register_employee.html', {'form': form})
 
+@login_required(login_url='home')
 def edit_profile(request):
     return render(request, 'admins/_edit_profile.html')
 
 
 # EMPLOYEE DASHBOARD
+@login_required(login_url='home')
 def employee_dashboard(request):
-    return render(request, 'employee/employee_dashboard.html')
+    return render(request, 'employee/employee_dashboard.html', {})
+
+#LOGGING OUT
+@login_required(login_url='home')
+def logoutUser(request):
+    logout(request)
+    return redirect('home')
+

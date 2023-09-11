@@ -36,7 +36,7 @@
     </header>
 
         <!-- PUT NEXT NAV HERE ... -->
-    <nav class="navbar navbar-expand-md  fixed-top pt-md-4 pt-5">
+    <nav class="navbar navbar-expand-lg fixed-top mt-md-4 mt-5 ">
       <div class="container-xl">
         <a href="#" class="navbar-brand">
           <span class="fw-bold text-secondary">TechMahindra</span>
@@ -57,16 +57,19 @@
         <div class="collapse navbar-collapse justify-content-end align-center justify-content-md-evenly" id="main-nav">
           <ul class="navbar-nav text-secondary fw-bold">
             <li class="nav-item">
-              <a href="#" class="nav-link">Search Employee</a>
+              <a href="#" class="nav-link btn">Search Employee</a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'edit_profile' %}" class="nav-link">Edit Profile</a>
+              <a href="{% url 'edit_profile' %}" class="nav-link btn">Edit Profile</a>
             </li>
-            <li class="nav-item me-5">
-              <a href="{% url 'register_admin' %}" class="nav-link">Register Admin</a>
+            <li class="nav-item">
+              <a href="{% url 'register_admin' %}" class="nav-link btn">Register Admin</a>
             </li>
-            <li class="nav-item d-flex align-items-center">
-              <span class="">Admin: {{user.firstname_and_middlename}} {{user.lastname}}</span>
+            <li class="nav-item ">
+              <a href="#" class="nav-link btn">Admin: {{request.user}}</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'logoutUser' %}" class="nav-link btn btn-danger bg-danger">Log out</a>
             </li>
           </ul>
 
