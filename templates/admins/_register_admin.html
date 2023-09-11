@@ -5,7 +5,10 @@
 {% endblock title %}
 
 {% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+    </form>
     
-    This is Register Admin
 
 {% endblock content %}

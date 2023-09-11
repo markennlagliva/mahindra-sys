@@ -1,12 +1,13 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinLengthValidator, MaxLengthValidator, RegexValidator
 
+
+# from django.contrib.auth.models import User
 # Create your models here.
 
 # created_at = models.DateTimeField(auto_now_add=True)
 
 class AdminRegister(models.Model):
-
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
