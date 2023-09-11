@@ -1,65 +1,25 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinLengthValidator, MaxLengthValidator, RegexValidator
 
-
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
 # Create your models here.
 
-# created_at = models.DateTimeField(auto_now_add=True)
 
-class AdminRegister(models.Model):
-    GENDER_CHOICES = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-    )
-
-    userid = models.IntegerField(validators=[MaxValueValidator(300000)])
-    firstname_and_middlename = models.CharField(max_length=30)
-    lastname = models.CharField(max_length=50)
-    age = models.IntegerField(validators=[MaxValueValidator(65)])
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    address = models.CharField(max_length=50)
-    department = models.CharField(max_length=50)
-    occupation = models.CharField(max_length=50)
-    password = models.CharField(max_length=128,
-    validators= [
-        MinLengthValidator(limit_value=8, message="Password must be at least 8 characters long."),
-        MaxLengthValidator(limit_value=128, message="Password cannot exceed 128 characters."),
-        RegexValidator(
-            regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$', 
-            message="Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
-        ),
-    ]                          
-)   
-    confirmpass = models.CharField(max_length=128)
-
-    def __str__(self) -> str:
-        return self.firstname_and_middlename
-    
-class EmployeeRegister(models.Model):
+class ExtendUser(models.Model):
 
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
     )
 
-    userid = models.IntegerField(validators=[MaxValueValidator(300000)])
-    firstname_and_middlename = models.CharField(max_length=30)
-    lastname = models.CharField(max_length=50)
-    age = models.IntegerField(validators=[MaxValueValidator(65)])
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    address = models.CharField(max_length=50)
-    department = models.CharField(max_length=50)
-    password = models.CharField(max_length=128,
-    validators= [
-        MinLengthValidator(limit_value=8, message="Password must be at least 8 characters long."),
-        MaxLengthValidator(limit_value=128, message="Password cannot exceed 128 characters."),
-        RegexValidator(
-            regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$', 
-            message="Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
-        ),
-    ]                          
-)   
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    userid = models.IntegerField(validators=[MaxValueValidator(300000)], null=True)
+    age = models.IntegerField(validators=[MaxValueValidator(65)], null=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True)
+    address = models.CharField(max_length=50, null=True)
+    department = models.CharField(max_length=50, null=True)
+    occupation = models.CharField(max_length=50, null=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self) -> str:
-        return self.firstname_and_middlename 
+        return str(self.user)
