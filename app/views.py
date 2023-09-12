@@ -109,16 +109,31 @@ def edit_profile(request):
     return render(request, 'admins/_edit_profile.html')
 
 
+@login_required(login_url='home')
+@admin_only
+def search_employee(request):
+    #WORK RIGHT HERE......
+    employee_info = ExtendUser.objects.filter(age=21)
+
+    for info in employee_info:
+        context = {'info' : info}
+    return render(request, 'admins/_search_employee.html', context)
+    
+
+
 # EMPLOYEE DASHBOARD
 @login_required(login_url='home')
+@allowed_users(allowed_roles=['employee'])
 def employee_dashboard(request):
     return render(request, 'employee/employee_dashboard.html', {})
 
-
+@login_required(login_url='home')
+@allowed_users(allowed_roles=['employee'])
 def employee_edit_profile(request):
     return render(request, 'employee/_employee.html', {})
 
-
+@login_required(login_url='home')
+@allowed_users(allowed_roles=['employee'])
 def face_recognition(request):
     return render(request, 'employee/_dailystatus.html', {})
 
