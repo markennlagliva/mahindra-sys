@@ -36,10 +36,10 @@
     </header>
 
         <!-- PUT NEXT NAV HERE ... -->
-    <nav class="navbar navbar-expand-lg fixed-top mt-md-4 mt-5 ">
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #FF6F6F;">
       <div class="container-xl">
         <a href="#" class="navbar-brand">
-          <span class="fw-bold text-secondary">TechMahindra</span>
+          <span class="fw-bold text-white">TechMahindra</span>
         </a>
 
         <!-- Toggle button for mobile nav -->
@@ -57,16 +57,16 @@
         <div class="collapse navbar-collapse justify-content-end align-center justify-content-md-evenly" id="main-nav">
           <ul class="navbar-nav text-secondary fw-bold">
             <li class="nav-item">
-              <a href="{% url 'employee_edit_profile' %}" class="nav-link btn">Employee</a>
+              <a href="{% url 'employee_edit_profile' %}" class="nav-link btn text-white">Employee</a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'face_recognition' %}" class="nav-link btn">Employee Daily Status</a>
+              <a href="{% url 'face_recognition' %}" class="nav-link btn text-white">Employee Daily Status</a>
             </li>
             <li class="nav-item ">
-              <a href="#" class="nav-link btn">Employee: {{request.user}}</a>
+              <a href="#" class="nav-link btn text-white">Employee: {{request.user}}</a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'logoutUser' %}" class="nav-link btn btn-danger bg-danger">Log out</a>
+              <a href="{% url 'logoutUser' %}" class="nav-link btn btn-danger bg-danger text-white fw-semibold">Log out</a>
             </li>
           </ul>
 

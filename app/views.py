@@ -6,7 +6,7 @@ from django.contrib import messages
 #DATABASE and FORMS
 from .models import ExtendUser # DATABASE HERE
 from .forms import CreateUserForm
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 
 #restriction
 from django.contrib.auth.decorators import login_required
@@ -113,10 +113,12 @@ def edit_profile(request):
 @admin_only
 def search_employee(request):
     #WORK RIGHT HERE......
-    employee_info = ExtendUser.objects.filter(age=21)
+    # DO AS WELL TO User DB to access name and lastname
+    employee_info = ExtendUser.objects.all()
+    users = User.objects.all()
 
-    for info in employee_info:
-        context = {'info' : info}
+    for user in users:
+        context = {'employees' : employee_info, 'user' : user}
     return render(request, 'admins/_search_employee.html', context)
     
 
