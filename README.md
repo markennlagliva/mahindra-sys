@@ -12,3 +12,4 @@ Dependencies <br>
 - pipenv <br>
 - django <br>
 - django-livereload-server <br>
+- django-filter <br>
