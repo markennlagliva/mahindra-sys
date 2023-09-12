@@ -8,6 +8,10 @@ from .models import ExtendUser # DATABASE HERE
 from .forms import CreateUserForm
 from django.contrib.auth.models import Group, User
 
+
+# Filter
+from .filters import ExtendUserFilter
+
 #restriction
 from django.contrib.auth.decorators import login_required
 from .decorators import allowed_users, admin_only
@@ -117,8 +121,10 @@ def search_employee(request):
     employee_info = ExtendUser.objects.all()
     users = User.objects.all()
 
+    myFilter = ExtendUserFilter(request.GET, queryset=employee_info)  
+
     for user in users:
-        context = {'employees' : employee_info, 'user' : user}
+        context = {'employees' : employee_info, 'user' : user, 'myFilter' : myFilter}
     return render(request, 'admins/_search_employee.html', context)
     
 
