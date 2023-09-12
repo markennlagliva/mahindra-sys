@@ -17,4 +17,8 @@ urlpatterns = [
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('register_admin/', views.register_admin, name='register_admin'),
     path('register_employee/', views.register_employee, name='register_employee'),
+
+    # EMPLOYEE DASHBOARD
+    path('employee_edit_profile/', views.employee_edit_profile, name='employee_edit_profile'),
+    path('face_recognition', views.face_recognition, name='face_recognition')
 ]

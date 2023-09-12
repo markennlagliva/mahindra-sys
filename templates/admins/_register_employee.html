@@ -8,4 +8,13 @@
     
     This is Register Employee 
 
+
+
+    <div class="text-center bg-secondary fst-italic text-bg-primary ">
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    </div>
 {% endblock content %}
