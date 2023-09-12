@@ -19,6 +19,7 @@ class ExtendUser(models.Model):
     address = models.CharField(max_length=50, null=True)
     department = models.CharField(max_length=50, null=True)
     occupation = models.CharField(max_length=50, null=True)
+    fullname = models.CharField(max_length=50, null=True)
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self) -> str:
