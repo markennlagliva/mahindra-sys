@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from .forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib import messages
-from .models import ExtendUser
+
+#DATABASE and FORMS
+from .models import ExtendUser # DATABASE HERE
+from .forms import CreateUserForm
+from django.contrib.auth.models import Group
 
 #restriction
 from django.contrib.auth.decorators import login_required
+from .decorators import allowed_users, admin_only
 
 # Create your views here.
 def home(request):
@@ -55,33 +59,52 @@ def employee(request):
 
 # ADMIN DASHBOARD
 @login_required(login_url='home')
+@admin_only
 def admin_dashboard(request):
     return render(request, 'admins/admin_dashboard.html')
 
 @login_required(login_url='home')
+@admin_only
 def register_admin(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('base.html')
+            user = form.save()
+
+            username = form.cleaned_data.get('username')
+
+            group = Group.objects.get(name='admin')
+            user.groups.add(group)
+
+            messages.success(request, 'Account was created for ADMIN ' + username)
+            return redirect('home')
     else:
         form = CreateUserForm()
     return render(request, 'admins/_register_admin.html', {'form': form})
 
 
 @login_required(login_url='home')
+@admin_only
 def register_employee(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('base.html')
+            user = form.save()
+
+            username = form.cleaned_data.get('username')
+
+            group = Group.objects.get(name='employee')
+            user.groups.add(group)
+
+            messages.success(request, 'Account was created for EMPLOYEE' + username)
+        
+            return redirect('home')
     else:
         form = CreateUserForm()
     return render(request, 'admins/_register_employee.html', {'form': form})
 
 @login_required(login_url='home')
+@admin_only
 def edit_profile(request):
     return render(request, 'admins/_edit_profile.html')
 
@@ -90,6 +113,16 @@ def edit_profile(request):
 @login_required(login_url='home')
 def employee_dashboard(request):
     return render(request, 'employee/employee_dashboard.html', {})
+
+
+def employee_edit_profile(request):
+    return render(request, 'employee/_employee.html', {})
+
+
+def face_recognition(request):
+    return render(request, 'employee/_dailystatus.html', {})
+
+
 
 #LOGGING OUT
 @login_required(login_url='home')
