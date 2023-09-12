@@ -5,7 +5,42 @@
 {% endblock title %}
 
 {% block content %}
-    
-    This is Search Employee 
-    {{info.age}}
+
+  <div class="row mt-5 d-flex flex-column">
+      <div class="col-md">
+        <div class="card card-body">
+          <h5 class="text-secondary text-center">Registered Employees</h5>
+            <div class="card card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered ">
+                  <tr>
+                    <th>Records</th>
+                    <th>Id</th>
+                    <th>Department</th>
+                    <th>Fullname</th>
+                    <th>Age</th>
+                    <th>Address</th>
+                    <th>Gender</th>
+                    <th>Occupation</th>
+                    <th>Remove</th>
+                  </tr>
+                  {% for employee in employees %}
+                  <tr>
+                    <td><a href="#"class="btn btn-success btn-sm">View</a></td>
+                    <td>{{employee.userid}}</td>
+                    <td>{{employee.department}}</td>
+                    <td>{{employee.user.first_name}} {{employee.user.last_name}}</td>
+                    <td>{{employee.age}}</td>
+                    <td>{{employee.address}}</td>
+                    <td>{{employee.gender}}</td>
+                    <td>{{employee.occupation}}</td>
+                    <td><button class="btn btn-danger btn-sm">Remove</button></td>
+                  </tr>
+                  {% endfor %}
+                </table>
+             </div>
+          </div>
+        </div>
+      </div>
+   </div>
 {% endblock content %}
