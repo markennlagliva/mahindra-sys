@@ -126,6 +126,19 @@ def search_employee(request):
     for user in users:
         context = {'employees' : employee_info, 'user' : user, 'myFilter' : myFilter}
     return render(request, 'admins/_search_employee.html', context)
+
+@login_required(login_url='home')
+@admin_only
+#Delete Employee Record
+def delete_employee(request, pk):
+    employee_info = ExtendUser.objects.get(pk=pk)
+
+    if request.method == "POST":
+        employee_info.delete()
+        return redirect('search_employee')
+
+    context = {'employee' : employee_info}
+    return render(request, 'admins/deleteEmployee.html', context)
     
 
 
@@ -152,4 +165,5 @@ def face_recognition(request):
 def logoutUser(request):
     logout(request)
     return redirect('home')
+
 
