@@ -11,12 +11,15 @@
     <link rel="shortcut icon" href="{% static 'assets/logo.jpg' %}" type="image/x-icon">
 </head>
 <style>
+    * {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+   }
     body {
         background-color: #FBFAF9;
     }
 
     #logo {
-        width: 50%;
+        width: 70%;
     }
 </style>
 <body>
@@ -38,7 +41,7 @@
         <!-- PUT NEXT NAV HERE ... -->
     <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #FF6F6F;">
       <div class="container-xl">
-        <a href="#" class="navbar-brand">
+        <a href="{% url 'employee_dashboard' %}" class="navbar-brand">
           <span class="fw-bold text-white">TechMahindra</span>
         </a>
 
@@ -57,13 +60,13 @@
         <div class="collapse navbar-collapse justify-content-end align-center justify-content-md-evenly" id="main-nav">
           <ul class="navbar-nav text-secondary fw-bold">
             <li class="nav-item">
-              <a href="{% url 'employee_edit_profile' %}" class="nav-link btn text-white">Employee</a>
+              <a href="{% url 'employee_edit_profile' %}" class="nav-link btn text-white">Edit Profile</a>
             </li>
             <li class="nav-item">
               <a href="{% url 'face_recognition' %}" class="nav-link btn text-white">Employee Daily Status</a>
             </li>
             <li class="nav-item ">
-              <a href="#" class="nav-link btn text-white">Employee: {{request.user}}</a>
+              <a href="#" class="nav-link btn text-white">Employee: {{request.user.first_name}} {{request.user.last_name}}</a>
             </li>
             <li class="nav-item">
               <a href="{% url 'logoutUser' %}" class="nav-link btn btn-danger bg-danger text-white fw-semibold">Log out</a>
@@ -80,7 +83,17 @@
     <main class="container-fluid">
             <div class="row">
               {% block content %}
-
+              <div class="row d-flex justify-content-center ">
+                <div class="col-lg-auto">
+                    <a class="d-flex justify-content-center" href="{% url 'home' %}">
+                        <img class="img-fluid" id="logo" src="{% static 'assets/logo.jpg' %}" alt="logo">
+                    </a>
+                </div>
+              
+              </div>
+              <div class="col">
+                <h3 class="text-center text-secondary ">Employee Page</h3>
+              </div>
               {% endblock %}
             </div>
     </main>

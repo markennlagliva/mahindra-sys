@@ -10,8 +10,9 @@ urlpatterns = [
     path('admin_dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('employee_dashboard/', views.employee_dashboard, name='employee_dashboard'),
 
-    # logout
+    # logout and delete
     path('logout/', views.logoutUser, name='logoutUser'),
+    path('delete_employee/<str:pk>/', views.delete_employee, name='delete_employee'),
 
     # ADMIN DASHBOARD
     path('edit_profile/', views.edit_profile, name='edit_profile'),
