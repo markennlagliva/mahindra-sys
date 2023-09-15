@@ -5,7 +5,7 @@ from django.contrib import messages
 
 #DATABASE and FORMS
 from .models import ExtendUser # DATABASE HERE
-from .forms import CreateUserForm
+from .forms import CreateUserForm, ExtendUserForm
 from django.contrib.auth.models import Group, User
 
 
@@ -63,40 +63,51 @@ def employee(request):
 
 # ADMIN DASHBOARD
 @login_required(login_url='home')
+@allowed_users(allowed_roles=['admin'])
 @admin_only
 def admin_dashboard(request):
     return render(request, 'admins/admin_dashboard.html')
 
 @login_required(login_url='home')
+@allowed_users(allowed_roles=['admin'])
 @admin_only
 def register_admin(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
-        if form.is_valid():
+        form1 = ExtendUserForm(request.POST)
+        if form.is_valid() and form1.is_valid():
             user = form.save()
+            user1 = form1.save()
 
             username = form.cleaned_data.get('username')
 
+            user1.user.add(username)
             group = Group.objects.get(name='admin')
             user.groups.add(group)
 
+            
+
             messages.success(request, 'Account was created for ADMIN ' + username)
-            return redirect('home')
+            return redirect('register_admin')
     else:
         form = CreateUserForm()
-    return render(request, 'admins/_register_admin.html', {'form': form})
+        form1 = ExtendUserForm()
+    return render(request, 'admins/_register_admin.html', {'form': form, 'form1' : form1})
 
 
 @login_required(login_url='home')
+@allowed_users(allowed_roles=['admin'])
 @admin_only
 def register_employee(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
-        if form.is_valid():
+        form1 = ExtendUserForm(request.POST)
+        if form.is_valid() and form1.is_valid():
             user = form.save()
+            user1 = form1.save()
 
             username = form.cleaned_data.get('username')
-
+            
             group = Group.objects.get(name='employee')
             user.groups.add(group)
 
@@ -108,12 +119,14 @@ def register_employee(request):
     return render(request, 'admins/_register_employee.html', {'form': form})
 
 @login_required(login_url='home')
+@allowed_users(allowed_roles=['admin'])
 @admin_only
 def edit_profile(request):
     return render(request, 'admins/_edit_profile.html')
 
 
 @login_required(login_url='home')
+@allowed_users(allowed_roles=['admin'])
 @admin_only
 def search_employee(request):
     #WORK RIGHT HERE......
@@ -128,13 +141,16 @@ def search_employee(request):
     return render(request, 'admins/_search_employee.html', context)
 
 @login_required(login_url='home')
+@allowed_users(allowed_roles=['admin'])
 @admin_only
 #Delete Employee Record
 def delete_employee(request, pk):
-    employee_info = ExtendUser.objects.get(pk=pk)
+    employee_info = ExtendUser.objects.get(userid=pk)
+    user = User.objects.get(username=employee_info.user)
 
     if request.method == "POST":
         employee_info.delete()
+        user.delete()
         return redirect('search_employee')
 
     context = {'employee' : employee_info}

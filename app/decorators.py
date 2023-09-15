@@ -13,7 +13,7 @@ def allowed_users(allowed_roles=[]):
             if group in allowed_roles:
                 return view_func(request, *args, **kwargs)
             else:
-                return render(request, 'forbidden/403.html')
+                return render(request, 'forbidden/403.html' ,{'group' : group})
         return wrapper_func
     return decorator
 
