@@ -8,19 +8,20 @@
 
 ✅ Django-Livereload-server dependency installed
 
-#Dependencies <br>
+# Dependencies <br>
 - pipenv <br>
 - django <br>
 - mysqlclient <br>
 - django-livereload-server <br>
 - django-filter <br>
 
-#Technologies used
+# Technologies used
 - Html <br>
 - CSS <br>
 - Bootstrap <br>
 - Python (Django) <br>
 - Mysql <br>
 
-Python --version <br>
-Python 11⬆️ <br>
+# Python --version <br>
+Python 3.11.5 was the 
+version of Python utilized in this work <br>
