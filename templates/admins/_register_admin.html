@@ -5,20 +5,26 @@
 {% endblock title %}
 
 {% block content %}
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
+    <div class="row mt-5 ">
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+            <!-- first_name, last_name, password1, password2 -->
 
-        <button class="btn btn-info" type="submit">Register</button>
-    </form>
-    
+            {{form1.as_p}}
+            <!-- age, gender, address, department, occupation -->
+
+            <input type="submit" value="Register" class="btn btn-info">
+        </form>
+        
 
 
-    <div class="text-center bg-secondary fst-italic text-bg-primary ">
-        {% if messages %}
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        {% endif %}
+        <div class="text-center bg-secondary fst-italic text-bg-primary ">
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
 {% endblock content %}
