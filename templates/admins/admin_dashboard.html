@@ -72,7 +72,7 @@
               <a href="{% url 'register_employee' %}" class="nav-link btn text-white">Register Employee</a>
             </li>
             <li class="nav-item ">
-              <a href="#" class="nav-link btn text-white">Admin: {{request.user.first_name}} {{request.user.last_name}}</a>
+              <a href="#" class="nav-link btn text-white">Admin: {{request.user}}</a>
             </li>
             <li class="nav-item">
               <a href="{% url 'logoutUser' %}" class="nav-link btn btn-danger bg-danger text-white fw-semibold ">Log out</a>

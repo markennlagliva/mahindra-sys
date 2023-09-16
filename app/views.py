@@ -77,15 +77,12 @@ def register_admin(request):
         form1 = ExtendUserForm(request.POST)
         if form.is_valid() and form1.is_valid():
             user = form.save()
-            user1 = form1.save()
+            form1.save()
 
             username = form.cleaned_data.get('username')
-
-            user1.user.add(username)
+            
             group = Group.objects.get(name='admin')
             user.groups.add(group)
-
-            
 
             messages.success(request, 'Account was created for ADMIN ' + username)
             return redirect('register_admin')
@@ -146,11 +143,11 @@ def search_employee(request):
 #Delete Employee Record
 def delete_employee(request, pk):
     employee_info = ExtendUser.objects.get(userid=pk)
-    user = User.objects.get(username=employee_info.user)
+    # user = User.objects.get(username=employee_info.user)
 
     if request.method == "POST":
         employee_info.delete()
-        user.delete()
+        # user.delete()
         return redirect('search_employee')
 
     context = {'employee' : employee_info}
