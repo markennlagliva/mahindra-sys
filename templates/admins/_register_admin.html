@@ -9,10 +9,31 @@
         <form method="POST">
             {% csrf_token %}
             {{form.as_p}}
-            <!-- first_name, last_name, password1, password2 -->
+            <!-- username, password1, password2 -->
+<!-- 
+            {{form1.as_p}} -->
+            <!-- userid, age, gender, address, department, first_name, last_name -->
 
-            {{form1.as_p}}
-            <!-- age, gender, address, department, occupation -->
+            {{form1.first_name.label}}
+            {{form1.first_name}} <br>
+
+            {{form1.last_name.label}}
+            {{form1.last_name}} <br>
+
+            {{form1.userid.label}}
+            {{form1.userid}} <br>
+
+            {{form1.age.label}}
+            {{form1.age}} <br>
+
+            {{form1.gender.label}}
+            {{form1.gender}} <br>
+
+            {{form1.address.label}}
+            {{form1.address}} <br>
+
+            {{form1.department.label}}
+            {{form1.department}} <br>
 
             <input type="submit" value="Register" class="btn btn-info">
         </form>

@@ -8,13 +8,13 @@ from django.contrib.auth.models import User
 class ExtendUserForm(forms.ModelForm):
     class Meta:
         model = ExtendUser
-        fields = ['userid', 'age', 'gender', 'address', 'department', 'occupation']
+        fields = ['userid', 'age', 'gender', 'address', 'department', 'occupation', 'first_name', 'last_name']
 
 
 
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'password1', 'password2']
+        fields = ['username', 'password1', 'password2']
 
         

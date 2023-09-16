@@ -13,6 +13,7 @@ class ExtendUser(models.Model):
     )
 
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+
     userid = models.IntegerField(validators=[MaxValueValidator(300000)], null=True)
     age = models.IntegerField(validators=[MaxValueValidator(65)], null=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True)
@@ -20,6 +21,9 @@ class ExtendUser(models.Model):
     department = models.CharField(max_length=50, null=True)
     occupation = models.CharField(max_length=50, null=True)
     fullname = models.CharField(max_length=50, null=True)
+    first_name = models.CharField(max_length=50, null=True)
+    last_name = models.CharField(max_length=50, null=True)
+
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self) -> str:

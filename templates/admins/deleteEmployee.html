@@ -8,7 +8,7 @@
     <div class="row mt-5">
         <div class="col d-flex justify-content-center">
             <div class="">
-                <p class="text-secondary">Are you sure you want to delete the record of "<span class="text-decoration-underline fst-italic">{{employee.user.first_name}} {{employee.user.last_name}}</span>"</p>
+                <p class="text-secondary">Are you sure you want to delete the record of "<span class="text-decoration-underline fst-italic">{{employee.first_name}} {{employee.last_name}}</span>"</p>
 
                 <form action="{% url 'delete_employee' employee.userid  %}" method="POST">
                     {% csrf_token %}

@@ -13,9 +13,9 @@
       <div>
         <form method="get">
           <span class="text-secondary fw-bold d-block d-md-inline">
-            {{myFilter.form.fullname.label}}:
+            {{myFilter.form.userid.label}}:
           </span>
-          {{myFilter.form.fullname}}
+          {{myFilter.form.userid}}
 
           <button class="btn btn-primary btn-sm" type="submit">Search</button>
         </form>
@@ -51,7 +51,7 @@
                     <td><a href="#"class="btn btn-success btn-sm">View</a></td>
                     <td>{{employee.userid}}</td>
                     <td>{{employee.department}}</td>
-                    <td>{{employee.user.first_name}} {{employee.user.last_name}}</td>
+                    <td>{{employee.first_name}} {{employee.last_name}}</td>
                     <td>{{employee.age}}</td>
                     <td>{{employee.address}}</td>
                     <td>{{employee.gender}}</td>
