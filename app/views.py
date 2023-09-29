@@ -101,19 +101,20 @@ def register_employee(request):
         form1 = ExtendUserForm(request.POST)
         if form.is_valid() and form1.is_valid():
             user = form.save()
-            user1 = form1.save()
+            form1.save()
 
             username = form.cleaned_data.get('username')
             
             group = Group.objects.get(name='employee')
             user.groups.add(group)
 
-            messages.success(request, 'Account was created for EMPLOYEE' + username)
+            messages.success(request, 'Account was created for EMPLOYEE ' + username)
         
-            return redirect('home')
+            return redirect('register_employee')
     else:
         form = CreateUserForm()
-    return render(request, 'admins/_register_employee.html', {'form': form})
+        form1 = ExtendUserForm()
+    return render(request, 'admins/_register_employee.html', {'form': form, 'form1' : form1})
 
 @login_required(login_url='home')
 @allowed_users(allowed_roles=['admin'])

@@ -14,17 +14,20 @@
    * {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
    }
-    body {
+
+
+    body, main{
         background-color: #FBFAF9;
+     
     }
 
     #logo {
         width: 70%;
     }
 </style>
-<body>
+<body class="h-100">
     
-    <header class="container-fluid" role="heading">
+    <header class="container-fluid " role="heading">
         <div class="row bg-danger">
             <span class="text-center text-white">Techmahindra Limited Records Management System</span>
         </div>
@@ -85,10 +88,10 @@
       </div>
     </nav>
 
-
+<!-- --bs-gutter-x: 0; -->
     <main class="container-fluid">
               {% block content %}
-              <div class="row d-flex justify-content-center ">
+              <div class="row d-flex justify-content-center h-100">
                 <div class="col-lg-auto">
                     <a class="d-flex justify-content-center" href="{% url 'home' %}">
                         <img class="img-fluid" id="logo" src="{% static 'assets/logo.jpg' %}" alt="logo">
@@ -101,9 +104,6 @@
               </div>
               {% endblock %}
     </main>
-
-
-
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 
