@@ -16,6 +16,10 @@ from .filters import ExtendUserFilter
 from django.contrib.auth.decorators import login_required
 from .decorators import allowed_users, admin_only
 
+#Update password
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
 # Create your views here.
 def home(request):
     return render(request, 'base.html')
@@ -120,7 +124,22 @@ def register_employee(request):
 @allowed_users(allowed_roles=['admin'])
 @admin_only
 def edit_profile(request):
-    return render(request, 'admins/_edit_profile.html')
+
+    user = User.objects.get(username=request.user)
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Update session to prevent logout
+            messages.success(request, 'Your password ' + str(request.user) + ' was successfully changed.')
+            return redirect('edit_profile')
+    else:
+        form = PasswordChangeForm(request.user)
+
+
+    context = {'form' : form}
+    return render(request, 'admins/_edit_profile.html', context)
 
 
 @login_required(login_url='home')
@@ -165,7 +184,22 @@ def employee_dashboard(request):
 @login_required(login_url='home')
 @allowed_users(allowed_roles=['employee'])
 def employee_edit_profile(request):
-    return render(request, 'employee/_employee.html', {})
+
+    user = User.objects.get(username=request.user)
+
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Update session to prevent logout
+            messages.success(request, 'Your password ' + str(request.user) + ' was successfully changed.')
+            return redirect('employee_edit_profile')
+    else:
+        form = PasswordChangeForm(request.user)
+
+
+    context = {'form' : form}
+    return render(request, 'employee/_employee.html', context)
 
 @login_required(login_url='home')
 @allowed_users(allowed_roles=['employee'])
