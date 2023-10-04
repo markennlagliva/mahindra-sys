@@ -66,7 +66,7 @@
               <a href="{% url 'face_recognition' %}" class="nav-link btn text-white">Employee Daily Status</a>
             </li>
             <li class="nav-item ">
-              <a href="#" class="nav-link btn text-white">Employee: {{request.user.first_name}} {{request.user.last_name}}</a>
+              <a href="#" class="nav-link btn text-white">Employee: {{request.user}}</a>
             </li>
             <li class="nav-item">
               <a href="{% url 'logoutUser' %}" class="nav-link btn btn-danger bg-danger text-white fw-semibold">Log out</a>
@@ -81,9 +81,9 @@
 
 
     <main class="container-fluid">
-            <div class="row">
+         
               {% block content %}
-              <div class="row d-flex justify-content-center ">
+              <div class="row d-flex justify-content-center h-100 ">
                 <div class="col-lg-auto">
                     <a class="d-flex justify-content-center" href="{% url 'home' %}">
                         <img class="img-fluid" id="logo" src="{% static 'assets/logo.jpg' %}" alt="logo">
@@ -95,7 +95,6 @@
                 <h3 class="text-center text-secondary ">Employee Page</h3>
               </div>
               {% endblock %}
-            </div>
     </main>
 
 

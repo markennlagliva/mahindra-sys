@@ -19,8 +19,25 @@
 
                     <div class="row">
                         <div class="text-center bg-secondary fst-italic text-bg-primary mt-3">
-                            {{form.errors}}
-                           <i> {{form1.errors}} </i>
+                        {% for field in form %}
+                            {% if field.errors %}
+                                <ul class="errorlist">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% for field in form1 %}
+                            {% if field.errors %}
+                                <ul class="errorlist">
+                                    {% for error in field.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endfor %}
                             
                             {% if messages %}
                                 {% for message in messages %}
@@ -29,7 +46,7 @@
                             {% endif %}
                         </div>
                     </div>
-
+                    
                     <div class="row">
                         <div class="mt-3 d-flex justify-content-center">
                             <div class="bg-secondary py-2 px-2 text-white fst-italic">Registration Admin</div>
@@ -187,7 +204,7 @@
                         {{ message }}
                     {% endfor %}
                 {% endif %}
-            </div>
-        </div> -->
+            </div> -->
+        <div>
 
 {% endblock content %}
