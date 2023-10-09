@@ -14,6 +14,9 @@
 - mysqlclient <br>
 - django-livereload-server <br>
 - django-filter <br>
+- cmake <br>
+- dlib {specified version needed} <br>
+- face_recognition <br>
 
 # Technologies used
 - Html <br>
