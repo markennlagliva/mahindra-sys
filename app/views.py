@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from django.contrib import messages
+from django.http import JsonResponse
 
 #DATABASE and FORMS
 from .models import ExtendUser # DATABASE HERE
@@ -19,6 +20,18 @@ from .decorators import allowed_users, admin_only
 #Update password
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
+
+
+#FACE RECOGNITION 
+from .utils import is_ajax, classify_face
+import base64
+from logs.models import Log, Attendance
+from profiles.models import Profile 
+from django.core.files.base import ContentFile
+
+
+
+
 
 # Create your views here.
 def home(request):
@@ -81,10 +94,30 @@ def register_admin(request):
         form1 = ExtendUserForm(request.POST)
         if form.is_valid() and form1.is_valid():
             user = form.save()
-            form1.save()
-
+           
             username = form.cleaned_data.get('username')
-            
+            age = form1.cleaned_data.get('age')
+            userid = form1.cleaned_data.get('userid')
+            gender = form1.cleaned_data.get('gender')
+            address = form1.cleaned_data.get('address')
+            department = form1.cleaned_data.get('department')
+            occupation = form1.cleaned_data.get('occupation')
+            first_name = form1.cleaned_data.get('first_name')
+            last_name = form1.cleaned_data.get('last_name')
+
+            userdb = User.objects.get(username=username)
+           
+            obj = ExtendUser.objects.get(user=userdb.pk)
+            obj.userid = userid
+            obj.age = age
+            obj.gender = gender
+            obj.address = address 
+            obj.department = department
+            obj.occupation = occupation
+            obj.first_name = first_name
+            obj.last_name = last_name
+            obj.save()
+
             group = Group.objects.get(name='admin')
             user.groups.add(group)
 
@@ -163,15 +196,26 @@ def search_employee(request):
 #Delete Employee Record
 def delete_employee(request, pk):
     employee_info = ExtendUser.objects.get(userid=pk)
-    # user = User.objects.get(username=employee_info.user)
-
+    user = User.objects.get(username=employee_info.user)
+    
     if request.method == "POST":
         employee_info.delete()
-        # user.delete()
+        user.delete()
         return redirect('search_employee')
 
     context = {'employee' : employee_info}
     return render(request, 'admins/deleteEmployee.html', context)
+
+
+#View Employee Attendance Records
+def view_employee(request, first_name, last_name, pk):
+    employee_info = ExtendUser.objects.get(first_name=first_name, last_name=last_name)
+
+    print('This is employee:', employee_info.first_name, employee_info.last_name)
+    
+    context = {'employee' : employee_info, 'first_name' : employee_info.first_name, 'last_name' : employee_info.last_name}
+    return render(request, 'admins/_view.html', context)
+    
     
 
 
@@ -204,9 +248,96 @@ def employee_edit_profile(request):
 @login_required(login_url='home')
 @allowed_users(allowed_roles=['employee'])
 def face_recognition(request):
-    return render(request, 'employee/_dailystatus.html', {})
+    
+    if is_ajax(request):
+        
+        photo = request.POST.get('photo')
+        _, str_img = photo.split(';base64')
 
+        decoded_file = base64.b64decode(str_img)
 
+        x = Log()
+        x.photo = ContentFile(decoded_file, 'upload.png')
+        x.save()
+
+        #classify the face
+        res = classify_face(x.photo.path)
+        user_exists = User.objects.filter(username=res).exists()
+        print('result: ', res) #userade
+        print('Does the face exist?: ', user_exists) #True
+        
+
+        from datetime import datetime
+        currentDate = datetime.now()
+        date = currentDate.date() # For Date
+        time = currentDate.time() # For Time
+        status = time.strftime('%p')
+        # status = 'PM'
+        if user_exists: #True
+            
+            def check(employee,date):
+                if status == 'AM':
+                    time_in = time.strftime('%H:%M:%S')
+                    formatted_time_12h = time.strftime('%I:%M %p') #render logic
+                    # time_in = '8:00:00' #Example for Morning
+                    obj = Attendance(employee_name=employee, date=date, timein=time_in)
+                    obj.save()  
+                else:
+                    time_out = time.strftime('%H:%M:%S')
+                    formatted_time_12h = time.strftime('%I:%M %p') #render logic
+                    print(formatted_time_12h)
+                    condition = str(time_out).split(':')[0]
+                    if int(condition) > 17:
+                        attendance_instance = Attendance.objects.get(employee_name=employee, date=date)
+                        attendance_instance.timeout = time_out
+                        time_out_time = [x for x in time_out.split(':')]
+                        time_in_time = [x for x in str(attendance_instance.timein).split(':')]
+                        attendance_instance.total_hours = int(time_out_time[0]) - int(time_in_time[0]) - 1
+                        if int(attendance_instance.total_hours) > 8:
+                            attendance_instance.overtime = attendance_instance.total_hours - 8
+                            attendance_instance.save()
+
+                        attendance_instance.save()
+                        
+                    else:
+                        attendance_instance = Attendance.objects.get(employee_name=employee, date=date)
+                        print('This is else PM: ',attendance_instance.employee_name)
+                        attendance_instance.timeout = time_out
+                        time_out_time = [x for x in time_out.split(':')]
+                        time_in_time = [x for x in str(attendance_instance.timein).split(':')]
+                        attendance_instance.total_hours = int(time_out_time[0]) - int(time_in_time[0]) - 1
+                        attendance_instance.overtime = 0
+                        attendance_instance.save()
+
+            check(res,date)
+            
+            
+                
+           
+            # return HttpResponseRedirect(reverse('success'))
+            # user = User.objects.get(username=res)
+            # profile = Profile.objects.get(user=user)
+            # print('user inside: ', user)
+            # x.profile = profile
+            # x.save()
+            return JsonResponse({'success': True})
+   
+        print('Failed')    
+        return JsonResponse({'success': False})
+
+        
+    else:
+        return render(request, 'employee/_dailystatus.html')
+
+@login_required(login_url='home')
+@allowed_users(allowed_roles=['employee'])
+def success(request):
+    return render(request, 'employee/success.html', {})
+
+@login_required(login_url='home')
+@allowed_users(allowed_roles=['employee'])
+def fail(request):
+    return render(request, 'employee/fail.html', {})
 
 #LOGGING OUT
 @login_required(login_url='home')

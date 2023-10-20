@@ -14,13 +14,18 @@ urlpatterns = [
     path('logout/', views.logoutUser, name='logoutUser'),
     path('delete_employee/<str:pk>/', views.delete_employee, name='delete_employee'),
 
+ 
+
     # ADMIN DASHBOARD
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('register_admin/', views.register_admin, name='register_admin'),
     path('register_employee/', views.register_employee, name='register_employee'),
     path('search_employee/', views.search_employee, name='search_employee'),
+    path('view_employee/<str:first_name>/<str:last_name>/<str:pk>', views.view_employee, name='view_employee'),
 
     # EMPLOYEE DASHBOARD
     path('employee_edit_profile/', views.employee_edit_profile, name='employee_edit_profile'),
-    path('face_recognition', views.face_recognition, name='face_recognition')
+    path('success/', views.success, name='success'),
+    path('fail/', views.fail, name='fail'),
+    path('face_recognition/', views.face_recognition, name='face_recognition')
 ]

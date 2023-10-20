@@ -13,8 +13,9 @@ class ExtendUser(models.Model):
     )
 
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-
+    
     userid = models.IntegerField(validators=[MaxValueValidator(300000)], null=True)
+    employee_mahindra = models.CharField(max_length=100, null=True)
     age = models.IntegerField(validators=[MaxValueValidator(65)], null=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True)
     address = models.CharField(max_length=50, null=True)
@@ -24,7 +25,11 @@ class ExtendUser(models.Model):
     first_name = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50, null=True)
 
+    # photo = models.ImageField(blank=True, upload_to='photos')
+
     date_created = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self) -> str:
-        return str(self.user)
+        return f"{self.user}"
+    
+

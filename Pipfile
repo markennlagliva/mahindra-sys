@@ -8,6 +8,11 @@ django = "*"
 mysqlclient = "*"
 django-livereload-server = "*"
 django-filter = "*"
+opencv-python = "*"
+deepface = "*"
+cmake = "*"
+dlib = {path = "./dlib-19.24.1-cp311-cp311-win_amd64.whl"}
+face-recognition = "*"
 
 [dev-packages]
 
