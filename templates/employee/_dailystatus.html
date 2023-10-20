@@ -1,11 +1,162 @@
 {% extends "employee/employee_dashboard.html" %}
 
+{% load static %}
+
 {% block title %}
     Mahindra: Employee Face Recognition Attendance
 {% endblock title %}
 
+{% block scripts %}
+    <!-- <script src="{% static 'main.js' %}" defer></script> -->
+{% endblock scripts %}
+
+
 {% block content %}
-    
-    This is Employee Attendance
+
+<div class="row mt-2">
+    <div method="POST" class="d-flex">
+      
+        <div class="col-lg-3 col-0">
+            <img src="{% static 'assets/employee.png' %}"  class="img-fluid d-none d-lg-block" alt="admin-logo">
+        </div>
+
+        <div class="col-lg-9 col">
+            <div class="row">
+                <div class="text-center bg-secondary fst-italic text-bg-primary mt-4">
+                    
+                    {% if messages %}
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    {% endif %}
+                  
+                    {{error}}
+                    {{status}}
+            
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="mt-3 d-flex justify-content-center">
+                    <div class="bg-success py-2 px-4 text-white fst-italic mb-2">Attendance</div>
+                </div>    
+            </div>
+            <div class="row">
+                <div class="text-center">
+                    <video id="video-element" autoplay="true"></video>
+                </div>
+                
+                <div id="img-element" class="text-center"></div>
+        
+                <div class="text-center mt-2">
+                    <button class="btn btn-success" id="capture-btn">Capture</button>
+                    <button class="btn btn-info" id="reload-btn">reload</button>
+                </div>       
+            </div>
+
+
+        </div> <!-- second div column -->
+    </div>
+</div> <!-- container -->
+<script>
+    console.log('Face-Recognition')
+
+const getCookie = (name) => {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+const csrftoken = getCookie('csrftoken');
+
+const video = document.getElementById('video-element')
+const image = document.getElementById('img-element')
+const captureBtn = document.getElementById('capture-btn')
+const reloadBtn = document.getElementById('reload-btn')
+
+reloadBtn.addEventListener('click', () => {
+    window.location.reload()
+})
+
+
+if (navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({video: true})
+    .then((stream) => {
+        video.srcObject = stream
+        const {height, width} = stream.getTracks()[0].getSettings()
+
+        captureBtn.addEventListener('click', e=> {
+            e.preventDefault()
+            captureBtn.classList.add('not-visible')
+            const track = stream.getVideoTracks()[0]
+            const imageCapture = new ImageCapture(track)
+            console.log(imageCapture)
+
+            imageCapture.takePhoto().then(blob => {
+                console.log("took photo:", blob)
+                const img = new Image(width, height)
+                img.src = URL.createObjectURL(blob)
+                image.append(img)
+                
+
+                video.classList.add('not-visible')
+
+                const reader = new FileReader()
+
+                reader.readAsDataURL(blob)
+                reader.onloadend = () => {
+                    const base64data = reader.result
+                    console.log(base64data)
+
+                    const fd = new FormData()
+                    fd.append('csrfmiddlewaretoken', csrftoken)
+                    fd.append('photo', base64data)
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/face_recognition/',
+                        enctype: 'multipart/form-data',
+                        data: fd,
+                        processData: false,
+                        contentType: false,
+                        success: (resp) => {
+                            // console.log(resp)
+                            console.log('Working REQUEST')
+                        
+                            console.log(resp.success)
+
+                            if (resp.success == true){
+                                window.location.href = "{% url 'success' %}"
+                            }
+                            else {
+                                window.location.href = "{% url 'fail' %}"
+                            }
+                           
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    })
+                }
+            }).catch(error => {
+                console.log('takePhoto() error: ', error);
+            });
+        });
+    })
+    .catch(error => {
+        console.log("Something went wrong!", error);
+    });
+}
+</script>
 
 {% endblock content %}

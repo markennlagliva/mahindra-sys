@@ -8,7 +8,13 @@
     <title>{% block title %} Mahindra System: Employee Dashboard {% endblock %}</title>
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="shortcut icon" href="{% static 'assets/logo.jpg' %}" type="image/x-icon">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    {% block scripts %}  {% endblock scripts %}
+    
 </head>
 <style>
     * {
@@ -24,9 +30,9 @@
 </style>
 <body>
     
-    <header class="container-fluid " role="heading">
-        <div class="row bg-danger">
-            <span class="text-center text-white">Techmahindra Limited Records Management System</span>
+    <header class="container-fluid " role="heading" style="background-color: #FBFAF9;">
+        <div class="row" style="background-color: #FBFAF9;">
+            <span class="text-center text-white " >Techmahindra Limited Records Management System</span>
         </div>
 
         <!-- <div class="row d-flex justify-content-center ">
@@ -99,7 +105,49 @@
 
 
 
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    
 </body>
+<!-- <script>
+  const videoElement = document.getElementById('videoElement');
+  const captureButton = document.getElementById('captureButton');
+
+  captureButton.addEventListener('click', async () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = videoElement.videoWidth;
+      canvas.height = videoElement.videoHeight;
+      canvas.getContext('2d').drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+      const imageData = canvas.toDataURL('image/png');
+
+      // Send the captured image data to Django using a fetch request
+      await fetch('/capture_image/', {
+          method: 'POST',
+          body: JSON.stringify({ image_data: imageData }),
+          headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCookie('csrftoken'),  // Include the CSRF token
+          },
+      });
+
+      alert('Image captured and sent to Django.');
+  });
+
+  // Function to get the CSRF token from cookies
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              if (cookie.substring(0, name.length + 1) === name + '=') {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+</script> -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 </html>
