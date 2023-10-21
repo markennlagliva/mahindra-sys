@@ -1,7 +1,8 @@
 from datetime import datetime
 
 currentDate = datetime.now()
-
+print(2 > 1)
+print(1 > 1 or 1 == 1)
 
 date = currentDate.date() # For Date
 time = currentDate.time()

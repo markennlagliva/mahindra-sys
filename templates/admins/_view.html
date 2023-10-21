@@ -1,5 +1,8 @@
 {% extends "admins/admin_dashboard.html" %}
 
+{% load static %}
+
+
 {% block title %}
     Mahindra: View Employee
 {% endblock title %}
@@ -14,7 +17,7 @@
   <div class="row mt-1 ">
       <div class="col-md">
         <div class="card card-body">
-          <h5 class="text-secondary text-center">Attendance Record of {{first_name}} {{last_name}}</h5>
+          <h5 class="text-secondary text-center">Attendance Record of {{employee.first_name}} {{employee.last_name}}</h5>
             <div class="card card-body">
               <div class="table-responsive">
                 <table class="table table-bordered ">
@@ -24,20 +27,24 @@
                     <th>Time Out</th>
                     <th>Total Hours of Work</th>
                     <th>Overtime</th>
+        
                     
+
+                    {% for attendance in attendances %}
+                    <tr>
+                      <td>{{attendance.date}}</td>
+                      <td>{{attendance.timein}}</td>
+                      <td>{{attendance.timeout}}</td>
+                      <td>{{attendance.total_hours}}</td>
+                      <td>{{attendance.overtime}}</td>
+                    </tr>
+                    {% endfor %}
+
                   </tr>
-                  {% for employee in myFilter.qs %}
-                  <tr>
-                    <!-- <td><a href="{% url 'view_employee' employee.first_name employee.last_name %}" class="btn btn-success btn-sm">View</a></td> -->
-                    <td>{{employee.date}}</td>
-                    <td>{{employee.timein}}</td>
-                    <td>{{employee.timeout}}</td>
-                    <td>{{employee.total_hours}}</td>
-                    <td>{{employee.overtime}}</td>
-                    <!-- <td><a href="{% url 'delete_employee' employee.userid %}" class="btn btn-danger btn-sm">Remove</a></td> -->
-                  </tr>
-                  {% endfor %}
+                 
                 </table>
+
+                
              </div>
           </div>
         </div>
