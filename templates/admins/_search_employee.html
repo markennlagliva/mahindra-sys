@@ -48,7 +48,7 @@
                   </tr>
                   {% for employee in myFilter.qs %}
                   <tr>
-                    <td><a href="{% url 'view_employee' employee.first_name employee.last_name employee.id %}" class="btn btn-success btn-sm">View</a></td>
+                    <td><a href="{% url 'view_employee' employee.first_name employee.last_name employee.pk %}" class="btn btn-success btn-sm">View</a></td>
                     <td>{{employee.userid}}</td>
                     <td>{{employee.department}}</td>
                     <td>{{employee.first_name}} {{employee.last_name}}</td>

@@ -138,8 +138,11 @@ if (navigator.mediaDevices.getUserMedia) {
                             if (resp.success == true){
                                 window.location.href = "{% url 'success' %}"
                             }
-                            else {
+                            else if (resp.success == false){
                                 window.location.href = "{% url 'fail' %}"
+                            }
+                            else {
+                                window.location.href = "{% url 'done' %}"
                             }
                            
                         },

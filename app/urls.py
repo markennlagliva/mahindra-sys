@@ -21,11 +21,12 @@ urlpatterns = [
     path('register_admin/', views.register_admin, name='register_admin'),
     path('register_employee/', views.register_employee, name='register_employee'),
     path('search_employee/', views.search_employee, name='search_employee'),
-    path('view_employee/<str:first_name>/<str:last_name>/<str:pk>', views.view_employee, name='view_employee'),
+    path('view_employee/<str:first_name>/<str:last_name>/<str:pk>/', views.view_employee, name='view_employee'),
 
     # EMPLOYEE DASHBOARD
     path('employee_edit_profile/', views.employee_edit_profile, name='employee_edit_profile'),
     path('success/', views.success, name='success'),
     path('fail/', views.fail, name='fail'),
+    path('done/', views.done, name='done'),
     path('face_recognition/', views.face_recognition, name='face_recognition')
 ]

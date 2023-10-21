@@ -6,7 +6,7 @@ from django.http import JsonResponse
 
 #DATABASE and FORMS
 from .models import ExtendUser # DATABASE HERE
-from .forms import CreateUserForm, ExtendUserForm
+from .forms import CreateUserForm, ExtendUserForm, CreateProfileForm
 from django.contrib.auth.models import Group, User
 
 
@@ -136,14 +136,39 @@ def register_employee(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         form1 = ExtendUserForm(request.POST)
+        # form2 = CreateProfileForm(request.POST)
         if form.is_valid() and form1.is_valid():
             user = form.save()
-            form1.save()
+            # form2.save()
 
             username = form.cleaned_data.get('username')
+            age = form1.cleaned_data.get('age')
+            userid = form1.cleaned_data.get('userid')
+            gender = form1.cleaned_data.get('gender')
+            address = form1.cleaned_data.get('address')
+            department = form1.cleaned_data.get('department')
+            occupation = form1.cleaned_data.get('occupation')
+            first_name = form1.cleaned_data.get('first_name')
+            last_name = form1.cleaned_data.get('last_name')
+            # photo = form2.cleaned_data.get('photo')
+
+            userdb = User.objects.get(username=username)
+           
+            obj = ExtendUser.objects.get(user=userdb.pk)
+           
+            obj.userid = userid
+            obj.age = age
+            obj.gender = gender
+            obj.address = address 
+            obj.department = department
+            obj.occupation = occupation
+            obj.first_name = first_name
+            obj.last_name = last_name
+            obj.save()
             
             group = Group.objects.get(name='employee')
             user.groups.add(group)
+           
 
             messages.success(request, 'Account was created for EMPLOYEE ' + username)
         
@@ -151,6 +176,7 @@ def register_employee(request):
     else:
         form = CreateUserForm()
         form1 = ExtendUserForm()
+        # form2 = CreateProfileForm()
     return render(request, 'admins/_register_employee.html', {'form': form, 'form1' : form1})
 
 @login_required(login_url='home')
@@ -210,10 +236,21 @@ def delete_employee(request, pk):
 #View Employee Attendance Records
 def view_employee(request, first_name, last_name, pk):
     employee_info = ExtendUser.objects.get(first_name=first_name, last_name=last_name)
-
-    print('This is employee:', employee_info.first_name, employee_info.last_name)
+    print('This is pk:' ,employee_info.user.pk)
+    user = User.objects.get(pk=employee_info.user.pk)
+    print(type(user.username))
+   
+    # implement try and catch
+    attendances = Attendance.objects.filter(employee_name=user.username)
     
-    context = {'employee' : employee_info, 'first_name' : employee_info.first_name, 'last_name' : employee_info.last_name}
+    # for attendance in attendances:
+    #     print(attendance.date)
+    #     print(attendance.timein)
+    #     print(attendance.timeout)
+    #     print(attendance.total_hours)
+    #     print(attendance.overtime)
+    
+    context = {'employee' : employee_info, 'attendances' : attendances}
     return render(request, 'admins/_view.html', context)
     
     
@@ -272,45 +309,75 @@ def face_recognition(request):
         date = currentDate.date() # For Date
         time = currentDate.time() # For Time
         status = time.strftime('%p')
-        # status = 'PM'
+        # status = 'AM'
         if user_exists: #True
             
             def check(employee,date):
                 if status == 'AM':
                     time_in = time.strftime('%H:%M:%S')
+                    # time_in = '08:00:00'
                     formatted_time_12h = time.strftime('%I:%M %p') #render logic
                     # time_in = '8:00:00' #Example for Morning
-                    obj = Attendance(employee_name=employee, date=date, timein=time_in)
-                    obj.save()  
+                
+                    obj_check = Attendance.objects.filter(employee_name=employee, date=date)
+                    print('Total user log in Today:', len(obj_check))
+                    print('This is AM')
+                    if len(obj_check) > 1 or len(obj_check) == 1:
+                        print('AM inside')
+                        return JsonResponse({'success': 'Error'})
+                    
+                    #markenn work here
+                    else:
+                        obj = Attendance(employee_name=employee, date=date, timein=time_in)
+                        obj.save()  
+                        return JsonResponse({'success': True})
                 else:
                     time_out = time.strftime('%H:%M:%S')
                     formatted_time_12h = time.strftime('%I:%M %p') #render logic
                     print(formatted_time_12h)
-                    condition = str(time_out).split(':')[0]
-                    if int(condition) > 17:
-                        attendance_instance = Attendance.objects.get(employee_name=employee, date=date)
-                        attendance_instance.timeout = time_out
-                        time_out_time = [x for x in time_out.split(':')]
-                        time_in_time = [x for x in str(attendance_instance.timein).split(':')]
-                        attendance_instance.total_hours = int(time_out_time[0]) - int(time_in_time[0]) - 1
-                        if int(attendance_instance.total_hours) > 8:
-                            attendance_instance.overtime = attendance_instance.total_hours - 8
-                            attendance_instance.save()
 
-                        attendance_instance.save()
-                        
+                    obj_check = Attendance.objects.filter(employee_name=employee, date=date)
+
+                    print('Total user log in Today:', len(obj_check))
+                    obj_timeout = [data.timeout for data in obj_check]
+                    
+                    print('Type of len:', type(len(obj_check)))
+                    print('This is the T or F:', len(obj_check) > 1)
+
+                    if len(obj_check) > 1 or str(obj_timeout) != str('[datetime.time(0, 0)]'):
+                        print('Inside if, we DID it!')
+                        print('This is timeout', obj_timeout)
+                        return JsonResponse({'success': 'Error'})
                     else:
-                        attendance_instance = Attendance.objects.get(employee_name=employee, date=date)
-                        print('This is else PM: ',attendance_instance.employee_name)
-                        attendance_instance.timeout = time_out
-                        time_out_time = [x for x in time_out.split(':')]
-                        time_in_time = [x for x in str(attendance_instance.timein).split(':')]
-                        attendance_instance.total_hours = int(time_out_time[0]) - int(time_in_time[0]) - 1
-                        attendance_instance.overtime = 0
-                        attendance_instance.save()
+                        condition = str(time_out).split(':')[0]
+                        if int(condition) > 17:
+                            attendance_instance = Attendance.objects.get(employee_name=employee, date=date)
+                            attendance_instance.timeout = time_out
+                            time_out_time = [x for x in time_out.split(':')]
+                            time_in_time = [x for x in str(attendance_instance.timein).split(':')]
+                            attendance_instance.total_hours = int(time_out_time[0]) - int(time_in_time[0]) - 1
+                            if int(attendance_instance.total_hours) > 8:
+                                attendance_instance.overtime = attendance_instance.total_hours - 8
+                                attendance_instance.save()
 
-            check(res,date)
-            
+                            attendance_instance.save()
+                            return JsonResponse({'success': True})
+                            
+                        else:
+                            attendance_instance = Attendance.objects.get(employee_name=employee, date=date)
+                            print('This is else PM: ',attendance_instance.employee_name)
+                            attendance_instance.timeout = time_out
+                            time_out_time = [x for x in time_out.split(':')]
+                            time_in_time = [x for x in str(attendance_instance.timein).split(':')]
+                            attendance_instance.total_hours = int(time_out_time[0]) - int(time_in_time[0]) - 1
+                            attendance_instance.overtime = 0
+                            attendance_instance.save()
+                            return JsonResponse({'success': True})
+            res = check(res,date)
+            return res
+            # print(JsonResponse({'success': True}))
+            # print('value of res:',res)
+            # return JsonResponse({'success': True})
             
                 
            
@@ -320,10 +387,9 @@ def face_recognition(request):
             # print('user inside: ', user)
             # x.profile = profile
             # x.save()
-            return JsonResponse({'success': True})
-   
-        print('Failed')    
-        return JsonResponse({'success': False})
+        else: 
+            print('Failed')    
+            return JsonResponse({'success': False})
 
         
     else:
@@ -338,6 +404,13 @@ def success(request):
 @allowed_users(allowed_roles=['employee'])
 def fail(request):
     return render(request, 'employee/fail.html', {})
+
+@login_required(login_url='home')
+@allowed_users(allowed_roles=['employee'])
+def done(request):
+    return render(request, 'employee/done.html', {})
+
+
 
 #LOGGING OUT
 @login_required(login_url='home')
