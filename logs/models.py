@@ -14,7 +14,9 @@ class Log(models.Model):
 
     def __str__(self):
         return f"{self.id}"
-    
+
+import datetime
+
 class Attendance(models.Model):
     employee_key = models.ForeignKey(ExtendUser, on_delete=models.CASCADE, blank=True, null=True)
     employee_name = models.CharField(max_length=100)
@@ -23,6 +25,23 @@ class Attendance(models.Model):
     timeout = models.TimeField(null=False, default='00:00:00') # accepts %H:%M:%S
     total_hours = models.IntegerField(null=False, default='0')
     overtime = models.IntegerField(null=False, default='0')
+    month = models.IntegerField(
+        choices=[
+            (1, 'January'),
+            (2, 'February'),
+            (3, 'March'),
+            (4, 'April'),
+            (5, 'May'),
+            (6, 'June'),
+            (7, 'July'),
+            (8, 'August'),
+            (9, 'September'),
+            (10, 'October'),
+            (11, 'November'),
+            (12, 'December'),
+        ]
+    )
+    year = models.IntegerField(null=False, default=datetime.datetime.now().year)
     
 
 

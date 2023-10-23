@@ -19,6 +19,8 @@
 
           <button class="btn btn-primary btn-sm" type="submit">Search</button>
         </form>
+
+        
       </div>
   
       <!-- <div class="align-self-end">
@@ -45,6 +47,7 @@
                     <th>Gender</th>
                     <th>Occupation</th>
                     <th>Remove</th>
+                 
                   </tr>
                   {% for employee in myFilter.qs %}
                   <tr>
@@ -56,7 +59,8 @@
                     <td>{{employee.address}}</td>
                     <td>{{employee.gender}}</td>
                     <td>{{employee.occupation}}</td>
-                    <td><a href="{% url 'delete_employee' employee.userid %}" class="btn btn-danger btn-sm">Remove</a></td>
+                    <td><a href="{% url 'delete_employee' employee.user.pk %}" class="btn btn-danger btn-sm">Remove</a></td>
+                 
                   </tr>
                   {% endfor %}
                 </table>

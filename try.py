@@ -4,8 +4,18 @@ currentDate = datetime.now()
 print(2 > 1)
 print(1 > 1 or 1 == 1)
 
+import datetime
+print('Current Month:',datetime.datetime.now().month)
+# Get the current year
+current_year = datetime.datetime.now().year
+
+# Print the current year
+print('This is current year:',current_year)
+
 date = currentDate.date() # For Date
 time = currentDate.time()
+
+
 print(time)
 print(date)
 status = time.strftime('%p')
