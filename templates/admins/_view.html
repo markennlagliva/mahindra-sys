@@ -18,6 +18,25 @@
       <div class="col-md">
         <div class="card card-body">
           <h5 class="text-secondary text-center">Attendance Record of {{employee.first_name}} {{employee.last_name}}</h5>
+          <form method="get" id="search-form">
+            <span>
+              <span class="text-secondary fw-bold d-block d-md-inline">
+                {{myFilter.form.year.label}}:
+              </span>
+              {{myFilter.form.year}}
+            </span>
+            
+            <span>
+              <span class="text-secondary fw-bold d-block d-md-inline">
+                {{myFilter.form.month.label}}:
+              </span>
+              {{myFilter.form.month}}
+            </span>
+            <div>
+              <button class="btn btn-white btn-sm" type="submit">Name: <strong>{{employee.first_name}} {{employee.last_name}}</strong></button>
+            </div>
+            
+          </form>
             <div class="card card-body">
               <div class="table-responsive">
                 <table class="table table-bordered ">
@@ -30,7 +49,7 @@
         
                     
 
-                    {% for attendance in attendances %}
+                    {% for attendance in myFilter.qs %}
                     <tr>
                       <td>{{attendance.date}}</td>
                       <td>{{attendance.timein}}</td>
@@ -50,4 +69,27 @@
         </div>
       </div>
    </div>
+  <!-- <script>
+     const searchForm = document.getElementById("search-form");
+     const queryForm = document.getElementById('id_year')
+
+     const selectOption = document.getElementById("id_month");
+
+    selectOption.addEventListener("change", function () {
+        const form = document.getElementById("selection-form");
+        form.submit();
+    });
+
+     searchQuery.addEventListener("input", function () {
+            // Delay the search for a brief moment to allow the user to finish typing
+            if (this.timer) {
+                clearTimeout(this.timer);
+            }
+
+            this.timer = setTimeout(function () {
+                searchForm.submit();
+            }, 500); // Adjust the delay as needed
+        });
+  </script> -->
+
 {% endblock content %}

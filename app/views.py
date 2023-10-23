@@ -11,7 +11,7 @@ from django.contrib.auth.models import Group, User
 
 
 # Filter
-from .filters import ExtendUserFilter
+from .filters import ExtendUserFilter, AttendanceFilter
 
 #restriction
 from django.contrib.auth.decorators import login_required
@@ -211,7 +211,7 @@ def search_employee(request):
     users = User.objects.all()
 
     myFilter = ExtendUserFilter(request.GET, queryset=employee_info)  
-
+    print(myFilter)
     for user in users:
         context = {'employees' : employee_info, 'user' : user, 'myFilter' : myFilter}
     return render(request, 'admins/_search_employee.html', context)
@@ -219,17 +219,20 @@ def search_employee(request):
 @login_required(login_url='home')
 @allowed_users(allowed_roles=['admin'])
 @admin_only
-#Delete Employee Record
+#Delete Employee 
 def delete_employee(request, pk):
-    employee_info = ExtendUser.objects.get(userid=pk)
-    user = User.objects.get(username=employee_info.user)
+    
+    # user = User.objects.get(pk=pk)
+    users = ExtendUser.objects.get(user=pk)
+    print(users, users.user.pk)
+    user = User.objects.get(pk=users.user.pk)
+    
     
     if request.method == "POST":
-        employee_info.delete()
         user.delete()
         return redirect('search_employee')
 
-    context = {'employee' : employee_info}
+    context = {'employee' : users}
     return render(request, 'admins/deleteEmployee.html', context)
 
 
@@ -238,11 +241,19 @@ def view_employee(request, first_name, last_name, pk):
     employee_info = ExtendUser.objects.get(first_name=first_name, last_name=last_name)
     print('This is pk:' ,employee_info.user.pk)
     user = User.objects.get(pk=employee_info.user.pk)
-    print(type(user.username))
+    print(user.username)
+    #markenn work here
+
+    
    
     # implement try and catch
     attendances = Attendance.objects.filter(employee_name=user.username)
-    
+    # perattendances = Attendance.objects.all()
+    myFilter = AttendanceFilter(request.GET, queryset=attendances) 
+  
+    # print(str(myFilter.form))
+  
+  
     # for attendance in attendances:
     #     print(attendance.date)
     #     print(attendance.timein)
@@ -250,7 +261,7 @@ def view_employee(request, first_name, last_name, pk):
     #     print(attendance.total_hours)
     #     print(attendance.overtime)
     
-    context = {'employee' : employee_info, 'attendances' : attendances}
+    context = {'employee' : employee_info, 'attendances' : attendances, 'myFilter' : myFilter}
     return render(request, 'admins/_view.html', context)
     
     
@@ -303,7 +314,7 @@ def face_recognition(request):
         print('result: ', res) #userade
         print('Does the face exist?: ', user_exists) #True
         
-
+       
         from datetime import datetime
         currentDate = datetime.now()
         date = currentDate.date() # For Date
@@ -326,9 +337,11 @@ def face_recognition(request):
                         print('AM inside')
                         return JsonResponse({'success': 'Error'})
                     
-                    #markenn work here
+                   
                     else:
-                        obj = Attendance(employee_name=employee, date=date, timein=time_in)
+                        import datetime
+                        month = datetime.datetime.now().month
+                        obj = Attendance(employee_name=employee, date=date, timein=time_in, month=month)
                         obj.save()  
                         return JsonResponse({'success': True})
                 else:

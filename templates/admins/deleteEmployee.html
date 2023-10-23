@@ -10,7 +10,7 @@
             <div class="">
                 <p class="text-secondary">Are you sure you want to delete the record of "<span class="text-decoration-underline fst-italic">{{employee.first_name}} {{employee.last_name}}</span>"</p>
 
-                <form action="{% url 'delete_employee' employee.userid  %}" method="POST">
+                <form action="{% url 'delete_employee' employee.user.pk  %}" method="POST">
                     {% csrf_token %}
                     <div class="text-center">
                         <a class="btn btn-danger" href="{% url 'search_employee' %}">Cancel</a>
