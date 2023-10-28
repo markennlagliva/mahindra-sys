@@ -10,7 +10,7 @@
 
 
 <div class="row py-1">
-    <form method="POST" enctype="multipart/form-data" class="d-flex">
+    <form method="POST" enctype="multipart/form-data"  class="d-flex">
         {% csrf_token %}
         <!-- <div class="col-lg-3">
             <img src="{% static 'assets/employee.png' %}"  class="img-fluid d-none d-lg-block" alt="admin-logo">
@@ -108,12 +108,12 @@
                     </div> 
                 </div>
 
-                <!-- <div class="col d-flex justify-content-center flex-column align-items-center">
+                <div class="col d-flex justify-content-center flex-column align-items-center">
                     <div class="d-flex flex-column">
                         {{form2.photo.label}}:
                         {{form2.photo}}
                     </div> 
-                </div> -->
+                </div>
             </div> <!-- end of 3rd row -->
            
             <div class="row text-center mt-5"> 

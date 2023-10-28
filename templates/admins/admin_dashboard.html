@@ -21,7 +21,7 @@
 
     body, main{
         background-color: #FBFAF9;
-     
+
     }
 
    /* #side-logo {
@@ -77,7 +77,7 @@
     <!-- </header> --> 
 
         <!-- PUT NEXT NAV HERE ... -->
-    <nav class="navbar navbar-expand-lg fixed-top d-block" style="background-color: #FF6F6F;">
+    <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #FF6F6F;">
       <div class="container-xl">
         <a href="{% url 'admin_dashboard' %}" class="navbar-brand">
           <span class="fw-bold text-white">TechMahindra <i class="bi bi-broadcast-pin"></i></span>
@@ -124,9 +124,9 @@
     </nav>
 
 <!-- --bs-gutter-x: 0; -->
-    <main class="d-flex">
+    <main class="">
       
-              {% block content %}
+          {% block content %}
             <section class="min-vh-100 container-fluid d-flex justify-content-center align-items-center">
               <div class="row">
                 <div class="col text-center">
@@ -139,9 +139,9 @@
               </div>
             
             </section>
-              {% endblock %}
+          {% endblock %}
     </main>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    
 </body>
-
-</html>!
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</html>

@@ -92,7 +92,8 @@ def register_admin(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         form1 = ExtendUserForm(request.POST)
-        if form.is_valid() and form1.is_valid():
+        form2 = CreateProfileForm(request.POST, request.FILES)
+        if form.is_valid() and form1.is_valid() and form2.is_valid():
             user = form.save()
            
             username = form.cleaned_data.get('username')
@@ -104,6 +105,7 @@ def register_admin(request):
             occupation = form1.cleaned_data.get('occupation')
             first_name = form1.cleaned_data.get('first_name')
             last_name = form1.cleaned_data.get('last_name')
+            photo = form2.cleaned_data.get('photo')
 
             userdb = User.objects.get(username=username)
            
@@ -121,12 +123,18 @@ def register_admin(request):
             group = Group.objects.get(name='admin')
             user.groups.add(group)
 
+            obj_photo = Profile.objects.get(user=userdb.pk)
+            print('This is the user:', obj_photo)
+            obj_photo.photo = photo
+            obj_photo.save()
+
             messages.success(request, 'Account was created for ADMIN ' + username)
             return redirect('register_admin')
     else:
         form = CreateUserForm()
         form1 = ExtendUserForm()
-    return render(request, 'admins/_register_admin.html', {'form': form, 'form1' : form1})
+        form2 = CreateProfileForm()
+    return render(request, 'admins/_register_admin.html', {'form': form, 'form1' : form1, 'form2' : form2})
 
 
 @login_required(login_url='home')
@@ -136,8 +144,9 @@ def register_employee(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         form1 = ExtendUserForm(request.POST)
-        # form2 = CreateProfileForm(request.POST)
-        if form.is_valid() and form1.is_valid():
+        form2 = CreateProfileForm(request.POST, request.FILES)
+    
+        if form.is_valid() and form1.is_valid() and form2.is_valid():
             user = form.save()
             # form2.save()
 
@@ -150,8 +159,8 @@ def register_employee(request):
             occupation = form1.cleaned_data.get('occupation')
             first_name = form1.cleaned_data.get('first_name')
             last_name = form1.cleaned_data.get('last_name')
-            # photo = form2.cleaned_data.get('photo')
-
+            photo = form2.cleaned_data.get('photo')
+            print('Thsis is the photo:', photo)
             userdb = User.objects.get(username=username)
            
             obj = ExtendUser.objects.get(user=userdb.pk)
@@ -168,7 +177,11 @@ def register_employee(request):
             
             group = Group.objects.get(name='employee')
             user.groups.add(group)
-           
+
+            obj_photo = Profile.objects.get(user=userdb.pk)
+            print('This is the user:', obj_photo)
+            obj_photo.photo = photo
+            obj_photo.save()
 
             messages.success(request, 'Account was created for EMPLOYEE ' + username)
         
@@ -176,8 +189,8 @@ def register_employee(request):
     else:
         form = CreateUserForm()
         form1 = ExtendUserForm()
-        # form2 = CreateProfileForm()
-    return render(request, 'admins/_register_employee.html', {'form': form, 'form1' : form1})
+        form2 = CreateProfileForm()
+    return render(request, 'admins/_register_employee.html', {'form': form, 'form1' : form1, 'form2' : form2})
 
 @login_required(login_url='home')
 @allowed_users(allowed_roles=['admin'])
