@@ -9,7 +9,6 @@
 
 {% block content %}
 
-
 <div class="row mt-5">
   
 </div>
@@ -18,7 +17,13 @@
       <div class="col-md">
         <div class="card card-body">
           <h5 class="text-secondary text-center">Attendance Record of {{employee.first_name}} {{employee.last_name}}</h5>
-          <form method="get" id="search-form">
+          <form method="get" id="search-form" class="mb-1">
+            <span>
+              <span class="text-secondary fw-bold d-block d-md-inline">
+                {{myFilter.form.month.label}}:
+              </span>
+              {{myFilter.form.month}}
+            </span>
             <span>
               <span class="text-secondary fw-bold d-block d-md-inline">
                 {{myFilter.form.year.label}}:
@@ -26,15 +31,10 @@
               {{myFilter.form.year}}
             </span>
             
-            <span>
-              <span class="text-secondary fw-bold d-block d-md-inline">
-                {{myFilter.form.month.label}}:
-              </span>
-              {{myFilter.form.month}}
-            </span>
-            <div>
+            
+            <!-- <div>
               <button class="btn btn-white btn-sm" type="submit">Name: <strong>{{employee.first_name}} {{employee.last_name}}</strong></button>
-            </div>
+            </div> -->
             
           </form>
             <div class="card card-body">

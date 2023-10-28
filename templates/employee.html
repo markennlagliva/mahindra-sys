@@ -8,13 +8,6 @@
     <div class="mb-3 text-center">
         <span class="btn btn-danger">Employee</span>
     </div>
-    <div class="text-center bg-secondary fst-italic text-bg-primary ">
-        {% if messages %}
-            {% for message in messages %}
-                {{ message }}
-            {% endfor %}
-        {% endif %}
-    </div>
 
     <form method="POST">
         {% csrf_token %}
@@ -31,5 +24,13 @@
             <button class="btn btn-danger btn-sm mt-2 px-5" type="submit" >Login</button>
         </div>
     </form>
+{% block alertify %}
+<script>
+    alertify.set('notifier','position', 'top-center');
+        {% for message in messages %}
+            alertify.error('{{message}}');
+        {% endfor %}
+</script>
+{% endblock alertify %}
 
 {% endblock content %}

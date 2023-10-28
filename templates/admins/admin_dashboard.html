@@ -9,7 +9,10 @@
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="shortcut icon" href="{% static 'assets/logo.jpg' %}" type="image/x-icon">
-</head>
+    <link rel="stylesheet" href="{% static 'node_modules/bootstrap-icons/font/bootstrap-icons.min.css' %}">
+
+   
+</head> 
 <style>
    * {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -21,31 +24,63 @@
      
     }
 
-    #logo {
-        width: 70%;
-    }
+   /* #side-logo {
+    background-image: url("{% static 'assets/admin.png' %}");
+   } */
+
+   #edit-profile-bg {
+    background-image: url("{% static 'assets/mahindra-bg.jpg' %}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+   }
+
+   #register-employee {
+    background-image: url("{% static 'assets/register-bg.jpg' %}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+   }
+
+   #register-admin {
+    background-image: url("{% static 'assets/admin-bg-2.jpg' %}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+   }
+
+   .custom-class .help-block, .custom-class .text-danger {
+    display: none;
+}
+
+  .nav-item:hover {
+    border: 1px solid #fff;
+    border-radius: 100px;
+    transition: 1s;
+  }
+
 </style>
-<body class="h-100">
+<body>
     
-    <header class="container-fluid " role="heading">
+    <!-- <header class="container-fluid " role="heading">
         <div class="row bg-danger">
             <span class="text-center text-white">Techmahindra Limited Records Management System</span>
         </div>
 
-        <!-- <div class="row d-flex justify-content-center ">
+         <div class="row d-flex justify-content-center ">
             <div class="col-lg-auto">
                 <a class="d-flex justify-content-center" href="{% url 'home' %}">
                     <img class="img-fluid" id="logo" src="{% static 'assets/logo.jpg' %}" alt="logo">
                 </a>
             </div>
         </div> -->
-    </header>
+    <!-- </header> --> 
 
         <!-- PUT NEXT NAV HERE ... -->
     <nav class="navbar navbar-expand-lg fixed-top d-block" style="background-color: #FF6F6F;">
       <div class="container-xl">
         <a href="{% url 'admin_dashboard' %}" class="navbar-brand">
-          <span class="fw-bold text-white">TechMahindra</span>
+          <span class="fw-bold text-white">TechMahindra <i class="bi bi-broadcast-pin"></i></span>
         </a>
 
         <!-- Toggle button for mobile nav -->
@@ -63,19 +98,19 @@
         <div class="collapse navbar-collapse justify-content-end align-center justify-content-md-evenly" id="main-nav">
           <ul class="navbar-nav text-secondary fw-bold">
             <li class="nav-item">
-              <a href="{% url 'search_employee' %}" class="nav-link btn text-white">Search Employee</a>
+              <a href="{% url 'search_employee' %}" class="nav-link btn text-white">Search Employee <i class="bi bi-search-heart"></i></a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'edit_profile' %}" class="nav-link btn text-white">Edit Profile</a>
+              <a href="{% url 'edit_profile' %}" class="nav-link btn text-white">Edit Profile <i class="bi bi-person-gear"></i></a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'register_admin' %}" class="nav-link btn text-white">Register Admin</a>
+              <a href="{% url 'register_admin' %}" class="nav-link btn text-white">Register Admin <i class="bi bi-person-vcard"></i></a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'register_employee' %}" class="nav-link btn text-white">Register Employee</a>
+              <a href="{% url 'register_employee' %}" class="nav-link btn text-white">Register Employee <i class="bi bi-person-vcard-fill"></i></a>
             </li>
             <li class="nav-item ">
-              <a href="#" class="nav-link btn text-white">Admin: {{request.user}}</a>
+              <a href="#" class="nav-link btn text-white"><i class="bi bi-person-circle"></i> Admin: {{request.user}}</a>
             </li>
             <li class="nav-item">
               <a href="{% url 'logoutUser' %}" class="nav-link btn btn-danger bg-danger text-white fw-semibold ">Log out</a>
@@ -89,22 +124,24 @@
     </nav>
 
 <!-- --bs-gutter-x: 0; -->
-    <main class="container-fluid">
+    <main class="d-flex">
+      
               {% block content %}
-              <div class="row d-flex justify-content-center h-100">
-                <div class="col-lg-auto">
-                    <a class="d-flex justify-content-center" href="{% url 'home' %}">
-                        <img class="img-fluid" id="logo" src="{% static 'assets/logo.jpg' %}" alt="logo">
+            <section class="min-vh-100 container-fluid d-flex justify-content-center align-items-center">
+              <div class="row">
+                <div class="col text-center">
+                    <a class="" href="{% url 'home' %}">
+                        <img id="logo" class="img-fluid " width="300" src="{% static 'assets/logo.jpg' %}" alt="logo">
                     </a>
+
+                    <h3 class="text-center text-secondary ">Administrator Page <i class="bi bi-person-check-fill"></i></h3>
                 </div>
-              
               </div>
-              <div class="col">
-                <h3 class="text-center text-secondary ">Administrator Page</h3>
-              </div>
+            
+            </section>
               {% endblock %}
     </main>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 </body>
 
-</html>
+</html>!

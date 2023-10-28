@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="shortcut icon" href="{% static 'assets/logo.jpg' %}" type="image/x-icon">
+        <link rel="stylesheet" href="{% static 'node_modules/bootstrap-icons/font/bootstrap-icons.min.css' %}">
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
@@ -24,31 +25,35 @@
         background-color: #FBFAF9;
     }
 
-    #logo {
-        width: 70%;
-    }
+    .nav-item:hover {
+    border: 1px solid #fff;
+    border-radius: 100px;
+    transition: 1s;
+  }
+
+
+  #edit-profile-bg {
+    background-image: url("{% static 'assets/mahindra-bg.jpg' %}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+   }
+
+   #face-recognition-bg {
+    background-image: url("{% static 'assets/face-recognition.jpg' %}");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+   }
 </style>
 <body>
     
-    <header class="container-fluid " role="heading" style="background-color: #FBFAF9;">
-        <div class="row" style="background-color: #FBFAF9;">
-            <span class="text-center text-white " >Techmahindra Limited Records Management System</span>
-        </div>
-
-        <!-- <div class="row d-flex justify-content-center ">
-            <div class="col-lg-auto">
-                <a class="d-flex justify-content-center" href="{% url 'home' %}">
-                    <img class="img-fluid" id="logo" src="{% static 'assets/logo.jpg' %}" alt="logo">
-                </a>
-            </div>
-        </div> -->
-    </header>
 
         <!-- PUT NEXT NAV HERE ... -->
     <nav class="navbar navbar-expand-lg fixed-top" style="background-color: #FF6F6F;">
       <div class="container-xl">
         <a href="{% url 'employee_dashboard' %}" class="navbar-brand">
-          <span class="fw-bold text-white">TechMahindra</span>
+          <span class="fw-bold text-white">TechMahindra <i class="bi bi-broadcast-pin"></span>
         </a>
 
         <!-- Toggle button for mobile nav -->
@@ -66,13 +71,13 @@
         <div class="collapse navbar-collapse justify-content-end align-center justify-content-md-evenly" id="main-nav">
           <ul class="navbar-nav text-secondary fw-bold">
             <li class="nav-item">
-              <a href="{% url 'employee_edit_profile' %}" class="nav-link btn text-white">Edit Profile</a>
+              <a href="{% url 'employee_edit_profile' %}" class="nav-link btn text-white"><i class="bi bi-person-gear"></i> Edit Profile</a>
             </li>
             <li class="nav-item">
-              <a href="{% url 'face_recognition' %}" class="nav-link btn text-white">Employee Daily Status</a>
+              <a href="{% url 'face_recognition' %}" class="nav-link btn text-white"><i class="bi bi-person-bounding-box"></i> Employee Daily Status</a>
             </li>
             <li class="nav-item ">
-              <a href="#" class="nav-link btn text-white">Employee: {{request.user}}</a>
+              <a href="#" class="nav-link btn text-white"><i class="bi bi-person-circle"></i> Employee: {{request.user}}</a>
             </li>
             <li class="nav-item">
               <a href="{% url 'logoutUser' %}" class="nav-link btn btn-danger bg-danger text-white fw-semibold">Log out</a>
@@ -86,20 +91,20 @@
     </nav>
 
 
-    <main class="container-fluid">
+    <main class="d-flex">
          
               {% block content %}
-              <div class="row d-flex justify-content-center h-100 ">
-                <div class="col-lg-auto">
-                    <a class="d-flex justify-content-center" href="{% url 'home' %}">
-                        <img class="img-fluid" id="logo" src="{% static 'assets/logo.jpg' %}" alt="logo">
-                    </a>
-                </div>
-              
-              </div>
-              <div class="col">
-                <h3 class="text-center text-secondary ">Employee Page</h3>
-              </div>
+                  <section class="min-vh-100 container-fluid d-flex justify-content-center align-items-center">
+                    <div class="row ">
+                      <div class="col text-center">
+                          <a class="" href="{% url 'home' %}">
+                              <img id="logo" class="img-fluid " width="300" src="{% static 'assets/logo.jpg' %}" alt="logo">
+                          </a>
+                      </div>
+                       <h3 class="text-center text-secondary ">Employee Page <i class="bi bi-person-check-fill"></h3>
+                    </div>
+                  
+                  </section>
               {% endblock %}
     </main>
 
