@@ -1,12 +1,14 @@
-{% extends "employee/employee_dashboard.html" %}
-
 {% load static %}
 
-{% block title %}
-  Mahindra: Successfully Recognized
-{% endblock title %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mahindra: Already done</title>
 
-{% block content %}
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
 <style>
   body {
     text-align: center;
@@ -41,7 +43,8 @@
     margin: 0 auto;
   }
 </style>
-
+<body>
+    
   <div class="card mt-4">
     <div style="border-radius:200px; height:200px; width:200px; background: #F8FAF5; margin:0 auto;">
       <i class="checkmark">✓</i>
@@ -51,4 +54,10 @@
       <p>Work well!, {{request.user}}</p>
       <a href="{% url 'employee_dashboard' %}" class="btn btn-success mt-2">Go back</a>
   </div>
-{% endblock content %}
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
+
+
+
+

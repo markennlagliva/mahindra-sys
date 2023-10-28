@@ -6,67 +6,68 @@
 
 {% block content %}
 
+<section class="container-lg min-vh-100 py-5">
+  <div class="row pt-5 pb-3">
+    <div class="col">
+      <div class="card card-body">
+        <div>
+          <form method="get">
+            <span class="text-secondary fw-bold d-block d-md-inline">
+              {{myFilter.form.userid.label}}:
+            </span>
+            {{myFilter.form.userid}}
 
-<div class="row mt-5">
-  <div class="col">
-    <div class="card card-body">
-      <div>
-        <form method="get">
-          <span class="text-secondary fw-bold d-block d-md-inline">
-            {{myFilter.form.userid.label}}:
-          </span>
-          {{myFilter.form.userid}}
+            <button class="btn btn-primary btn-sm" type="submit">Search</button>
+          </form>
 
-          <button class="btn btn-primary btn-sm" type="submit">Search</button>
-        </form>
-
-        
+          
+        </div>
+    
+        <!-- <div class="align-self-end">
+          <a href="{% url 'search_employee' %}" class="btn btn-success">Refresh</a>
+        </div> -->
       </div>
-  
-      <!-- <div class="align-self-end">
-        <a href="{% url 'search_employee' %}" class="btn btn-success">Refresh</a>
-      </div> -->
     </div>
   </div>
-</div>
 
-  <div class="row mt-1 ">
-      <div class="col-md">
-        <div class="card card-body">
-          <h5 class="text-secondary text-center">Registered Employees</h5>
-            <div class="card card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered ">
-                  <tr>
-                    <th>Records</th>
-                    <th>Id</th>
-                    <th>Department</th>
-                    <th>Fullname</th>
-                    <th>Age</th>
-                    <th>Address</th>
-                    <th>Gender</th>
-                    <th>Occupation</th>
-                    <th>Remove</th>
-                 
-                  </tr>
-                  {% for employee in myFilter.qs %}
-                  <tr>
-                    <td><a href="{% url 'view_employee' employee.first_name employee.last_name employee.pk %}" class="btn btn-success btn-sm">View</a></td>
-                    <td>{{employee.userid}}</td>
-                    <td>{{employee.department}}</td>
-                    <td>{{employee.first_name}} {{employee.last_name}}</td>
-                    <td>{{employee.age}}</td>
-                    <td>{{employee.address}}</td>
-                    <td>{{employee.gender}}</td>
-                    <td>{{employee.occupation}}</td>
-                    <td><a href="{% url 'delete_employee' employee.user.pk %}" class="btn btn-danger btn-sm">Remove</a></td>
-                 
-                  </tr>
-                  {% endfor %}
-                </table>
-             </div>
+    <div class="row">
+        <div class="col-md">
+          <div class="card card-body">
+            <h5 class="text-secondary text-center">Registered Employees</h5>
+              <div class="card card-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered ">
+                    <tr>
+                      <th>Records</th>
+                      <th>Id</th>
+                      <th>Department</th>
+                      <th>Fullname</th>
+                      <th>Age</th>
+                      <th>Address</th>
+                      <th>Gender</th>
+                      <th>Occupation</th>
+                      <th>Remove</th>
+                  
+                    </tr>
+                    {% for employee in myFilter.qs %}
+                    <tr>
+                      <td><a href="{% url 'view_employee' employee.first_name employee.last_name employee.pk %}" class="btn btn-success btn-sm">View</a></td>
+                      <td>{{employee.userid}}</td>
+                      <td>{{employee.department}}</td>
+                      <td>{{employee.first_name}} {{employee.last_name}}</td>
+                      <td>{{employee.age}}</td>
+                      <td>{{employee.address}}</td>
+                      <td>{{employee.gender}}</td>
+                      <td>{{employee.occupation}}</td>
+                      <td><a href="{% url 'delete_employee' employee.user.pk %}" class="btn btn-danger btn-sm">Remove</a></td>
+                  
+                    </tr>
+                    {% endfor %}
+                  </table>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-   </div>
+    </div>
+</section>
 {% endblock content %}

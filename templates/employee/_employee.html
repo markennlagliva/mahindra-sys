@@ -3,21 +3,93 @@
 {% load static %}
 
 {% block title %}
-    Mahindra: Employee Edit Profile
+    Mahindra: Edit Profile
 {% endblock title %}
 
-    
 {% block content %}
-<div class="row mt-2">
-    <form method="POST" enctype="multipart/form-data" class="d-flex">
-        {% csrf_token %}
-        <div class="col-lg-3 col-0">
-            <img src="{% static 'assets/employee.png' %}"  class="img-fluid d-none d-lg-block" alt="admin-logo">
-        </div>
 
-        <div class="col-lg-9 col">
-            <div class="row">
-                <div class="text-center bg-secondary fst-italic text-bg-primary mt-3">
+<section class="min-vh-100 d-flex justify-content-center align-items-center container-fluid py-5 " id="edit-profile-bg">
+    <div class="row">
+        <div class="col">
+            
+
+            <div class="bg-secondary p-3 text-center mb-3 rounded rounded-2 text-white fst-italic"><i class="bi bi-person-fill-check"></i> My Account</div>
+
+            <div class="form-control py-md-5 px-md-5">
+                <form method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-3">
+                    {% csrf_token %}
+                    <div class="form-control d-flex justify-content-between flex-column flex-lg-row">
+                        <span>
+                            {{form.old_password.label}}:
+                        </span>
+                        {{form.old_password}}
+                    </div>
+
+                    <div class="form-control d-flex justify-content-between  flex-column flex-lg-row">
+                        <span>
+                            {{form.new_password1.label}}:
+                        </span>
+                        {{form.new_password1}}
+                    </div>
+                
+                    <div class="form-control d-flex justify-content-between flex-column flex-lg-row">
+                        <span>
+                            {{form.new_password2.label}}:
+                        </span>
+                        {{form.new_password2}}
+                
+                    </div>
+
+                    <div class="errors text-danger ">
+                        {% for field in form %}
+                                {% if field.errors %}
+                                    <ul class="errorlist">
+                                        {% for error in field.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            {% endfor %}
+                    </div>
+                    <div class="text-success text-center">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                {% endif %}
+                    </div>
+
+                    <div class="row text-center mt-4"> 
+                        <div class="col d-flex justify-content-center flex-column align-items-center">
+                            <div class="d-flex flex-column ">
+                                <input type="submit" class="btn btn-secondary " value="Submit">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- <div class="row">
+        <form method="POST" enctype="multipart/form-data" class="d-flex">
+            {% csrf_token %}
+            <div class="col-lg-3 col-0">
+                <img src="{% static 'assets/admin.png' %}"  class="img-fluid d-none d-lg-block" alt="admin-logo">
+            </div>
+
+            <div class="col-lg-9 col">
+                <div class="row">
+                    <div class="text-center bg-secondary fst-italic text-bg-primary mt-3">
                     {% for field in form %}
                         {% if field.errors %}
                             <ul class="errorlist">
@@ -27,57 +99,57 @@
                             </ul>
                         {% endif %}
                     {% endfor %}
-                    
-                    {% if messages %}
-                        {% for message in messages %}
-                            {{ message }}
-                        {% endfor %}
-                    {% endif %}
+                        
+                        {% if messages %}
+                            {% for message in messages %}
+                                {{ message }}
+                            {% endfor %}
+                        {% endif %}
 
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="mt-3 d-flex justify-content-center">
-                    <div class="bg-secondary py-2 px-2 text-white fst-italic">My Account</div>
-                </div>    
-            </div>
-            <div class="mt-5 row mx-auto w-50 ">
-                                 
-                        <div class="col-12 d-flex justify-content-center flex-column align-items-center rounded-2 py-5 mx-auto " style="background-color: #A9E14A;">
-                            <div class="d-flex flex-column ">
-                                {{form.old_password.label}}:
-                                {{form.old_password}}
-                            </div>
+                <div class="row ">
+                    <div class="mt-3 d-flex justify-content-center">
+                        <div class="bg-secondary py-2 px-2 text-white fst-italic">My Account</div>
+                    </div>    
+                </div>
+                <div class="mt-5 row mx-auto w-50">
+                                     
+                            <div class="col-12 d-flex justify-content-center flex-column align-items-center rounded-2 py-5 mx-auto " style="background-color: #A9E14A;">
+                                <div class="d-flex flex-column ">
+                                    {{form.old_password.label}}:
+                                    {{form.old_password}}
+                                </div>
 
-                            <div class="d-flex flex-column ">
-                                {{form.new_password1.label}}:
-                                {{form.new_password1}}
-                            </div>
-                        
-                            <div class="d-flex flex-column ">
-                        
-                                {{form.new_password2.label}}:
-                                {{form.new_password2}}
-                        
-                            </div>
+                                <div class="d-flex flex-column ">
+                                    {{form.new_password1.label}}:
+                                    {{form.new_password1}}
+                                </div>
+                            
+                                <div class="d-flex flex-column ">
+                            
+                                    {{form.new_password2.label}}:
+                                    {{form.new_password2}}
+                            
+                                </div>
 
-                            <div class="row text-center mt-4"> 
-                                <div class="col d-flex justify-content-center flex-column align-items-center">
-                                    <div class="d-flex flex-column ">
-                                        <input type="submit" value="Submit">
+                                <div class="row text-center mt-4"> 
+                                    <div class="col d-flex justify-content-center flex-column align-items-center">
+                                        <div class="d-flex flex-column ">
+                                            <input type="submit" value="Submit">
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
-
-                        </div>
-               
-            </div>
+                   
+                </div>
 
 
-        </div> <!-- second div column -->
-    </form>
-</div> <!-- container -->
-
-
+            </div> 
+        </form>
+    </div> -->
+</section>
+   
 {% endblock content %}

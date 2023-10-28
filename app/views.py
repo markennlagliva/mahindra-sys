@@ -196,7 +196,6 @@ def edit_profile(request):
     else:
         form = PasswordChangeForm(request.user)
 
-
     context = {'form' : form}
     return render(request, 'admins/_edit_profile.html', context)
 
@@ -320,7 +319,7 @@ def face_recognition(request):
         date = currentDate.date() # For Date
         time = currentDate.time() # For Time
         status = time.strftime('%p')
-        # status = 'AM'
+        # status = 'PM'
         if user_exists: #True
             
             def check(employee,date):

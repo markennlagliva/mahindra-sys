@@ -1,210 +1,132 @@
 {% extends "admins/admin_dashboard.html" %}
-
 {% load static %}
 
 {% block title %}
     Mahindra: Admin Register
 {% endblock title %}
 
-
 {% block content %}
-        <div class="row mt-4" style="width: 100vw;">
-            <form method="POST" enctype="multipart/form-data" class="d-flex">
-                {% csrf_token %}
-                <div class="col-lg-3">
-                    <img src="{% static 'assets/admin.png' %}"  class="img-fluid d-none d-lg-block" alt="admin-logo">
-                </div>
+<section class="min-vh-100 py-4 container-fluid d-flex justify-content-center align-items-center" id="register-admin">
 
-                <div class="col-lg-9 col">
 
-                    <div class="row">
-                        <div class="text-center bg-secondary fst-italic text-bg-primary mt-3">
-                        {% for field in form %}
-                            {% if field.errors %}
-                                <ul class="errorlist">
-                                    {% for error in field.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        {% endfor %}
+<div class="row py-1">
+    <form method="POST" enctype="multipart/form-data" class="d-flex">
+        {% csrf_token %}
+        <!-- <div class="col-lg-3">
+            <img src="{% static 'assets/employee.png' %}"  class="img-fluid d-none d-lg-block" alt="admin-logo">
+        </div> -->
 
-                        {% for field in form1 %}
-                            {% if field.errors %}
-                                <ul class="errorlist">
-                                    {% for error in field.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                </ul>
-                            {% endif %}
-                        {% endfor %}
-                            
-                            {% if messages %}
-                                {% for message in messages %}
-                                    {{ message }}
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
+        <div class="col border border-3 px-5 py-2 rounded rounded-2 bg-white">
+
+            <div class="row">
+                <div class="text-center bg-secondary fst-italic text-bg-primary mt-3">
+                    {{form.errors}}
+                   <i> {{form1.errors}} </i>
                     
-                    <div class="row">
-                        <div class="mt-3 d-flex justify-content-center">
-                            <div class="bg-secondary py-2 px-2 text-white fst-italic">Registration Admin</div>
-                        </div>    
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col d-flex justify-content-center flex-column align-items-center">
-                            <div class="d-flex flex-column">
-                                {{form1.userid.label}}:
-                                {{form1.userid}}
-                            </div>
-
-                            <div class="d-flex flex-column ">
-                                {{form1.age.label}}:
-                                {{form1.age}}
-                            </div>
-
-                            <div class="d-flex flex-column ">
-                                {{form1.gender.label}}:
-                                {{form1.gender}}
-                            </div>
-
-                            <div class="d-flex flex-column ">
-                                {{form1.address.label}}:
-                                {{form1.address}}
-                            </div>
-                            <div class="d-flex flex-column ">
-                                {{form1.occupation.label}}:
-                                {{form1.occupation}}
-                            </div>
-                        
-                         
-
-                            
-                         
-                        </div>
-                        <div class="col d-flex justify-content-center flex-column align-items-center">
-
-                            <div class="d-flex flex-column ">
-                                {{form1.first_name.label}}:
-                                {{form1.first_name}}
-                            </div>
-        
-                            <div class="d-flex flex-column ">
-                                {{form1.last_name.label}}:
-                                {{form1.last_name}}
-                            </div>
-                        
-                            <div class="d-flex flex-column ">
-                                {{form.username.label}}:
-                                {{form.username}}
-                            </div>
-        
-                            <div class="d-flex flex-column ">
-                                {{form.password1.label}}:
-                                {{form.password1}}
-                            </div>
-    
-                            <div class="d-flex flex-column ">
-                                {{form.password2.label}}:
-                                {{form.password2}}
-                            </div>
-
-                        </div>
-
-
-                    </div> <!-- end of 2nd row -->
-
-                    <div class="row text-center"> 
-                        <div class="col d-flex justify-content-center flex-column align-items-center">
-                            <div class="d-flex flex-column ">
-                                {{form1.department.label}}
-                                {{form1.department}}
-                            </div>
-                        </div>
-                    </div> <!-- end of 3rd row -->
-                   
-                    <div class="row text-center mt-5"> 
-                        <div class="col d-flex justify-content-center flex-column align-items-center">
-                            <div class="d-flex flex-column ">
-                                <input type="submit" value="Register">
-                            </div>
-                        </div>
-                    </div> <!-- end of 4th row -->
-                 
-                   
+                    {% if messages %}
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    {% endif %}
                 </div>
+            </div>
 
-
+            <div class="row py-3">
+                <div class=" d-flex justify-content-center">
+                    <div class="bg-secondary py-2 px-2 text-white fst-italic rounded rounded-1"><i class="bi bi-people-fill"></i> Registration Admin</div>
+                </div>    
+            </div>
             
-        
-                    <!-- <div>
-                    {{form1.userid.label}}:
-                    {{form1.userid}}
+            <div class="row">
+                <div class="col d-flex justify-content-center flex-column align-items-center">
+                    <div class="d-flex flex-column">
+                        {{form1.userid.label}}:
+                        {{form1.userid}}
                     </div>
-                    <div>
+
+                    <div class="d-flex flex-column ">
                         {{form1.age.label}}:
                         {{form1.age}}
                     </div>
-                    <div>
+
+                    <div class="d-flex flex-column ">
                         {{form1.gender.label}}:
                         {{form1.gender}}
                     </div>
-                    <div>
+
+                    <div class="d-flex flex-column ">
                         {{form1.address.label}}:
                         {{form1.address}}
                     </div>
-                    <div>
+                    <div class="d-flex flex-column ">
                         {{form1.occupation.label}}:
                         {{form1.occupation}}
                     </div>
                 
-                    <div>
-                        {{form1.department.label}}
-                        {{form1.department}}
-                    </div>
+                 
 
-                    <div>
+                    
+                 
+                </div>
+                <div class="col d-flex justify-content-center flex-column align-items-center">
+
+                    <div class="d-flex flex-column ">
                         {{form1.first_name.label}}:
                         {{form1.first_name}}
                     </div>
 
-                    <div>
+                    <div class="d-flex flex-column ">
                         {{form1.last_name.label}}:
                         {{form1.last_name}}
                     </div>
                 
-                    <div>
-                        {{form.username.label}}
+                    <div class="d-flex flex-column ">
+                        {{form.username.label}}:
                         {{form.username}}
                     </div>
 
-                    <div>
-                        {{form.password1.label}}
+                    <div class="d-flex flex-column ">
+                        {{form.password1.label}}:
                         {{form.password1}}
                     </div>
 
-                  
-
-                    <div>
-                        {{form.password2.label}}
+                    <div class="d-flex flex-column ">
+                        {{form.password2.label}}:
                         {{form.password2}}
-                    </div> -->
-                    <!-- {{form1.as_p}}
-                    {{form.as_p}} -->
-                <!-- <input type="submit" value="Register"> -->
-            </form>
-            <!-- <div class="text-center bg-secondary fst-italic text-bg-primary ">
-                {{form.errors}}
-               <i> {{form1.errors}} </i>
-                
-                {% if messages %}
-                    {% for message in messages %}
-                        {{ message }}
-                    {% endfor %}
-                {% endif %}
-            </div> -->
-        <div>
+                    </div>
 
+                </div>
+
+
+            </div> <!-- end of 2nd row -->
+
+            <div class="row text-center"> 
+                <div class="col d-flex justify-content-center flex-column align-items-center">
+                    <div class="d-flex flex-column ">
+                        {{form1.department.label}}:
+                        {{form1.department}}
+                    </div> 
+                </div>
+
+                <!-- <div class="col d-flex justify-content-center flex-column align-items-center">
+                    <div class="d-flex flex-column">
+                        {{form2.photo.label}}:
+                        {{form2.photo}}
+                    </div> 
+                </div> -->
+            </div> <!-- end of 3rd row -->
+           
+            <div class="row text-center mt-5"> 
+                <div class="col d-flex justify-content-center flex-column align-items-center">
+                    <div class="d-flex flex-column ">
+                        <input type="submit" class="btn btn-secondary" value="Register">
+                    </div>
+                </div>
+            </div> <!-- end of 4th row -->
+         
+        </form>
+    </div>
+
+    
+</section>
 {% endblock content %}
