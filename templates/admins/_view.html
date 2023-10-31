@@ -9,11 +9,8 @@
 
 {% block content %}
 
-<div class="row mt-5">
-  
-</div>
-
-  <div class="row mt-1 ">
+<section class="container-lg min-vh-100 py-5">
+  <div class="row py-4">
       <div class="col-md">
         <div class="card card-body">
           <h5 class="text-secondary text-center">Attendance Record of {{employee.first_name}} {{employee.last_name}}</h5>
@@ -91,5 +88,5 @@
             }, 500); // Adjust the delay as needed
         });
   </script> -->
-
+</section>
 {% endblock content %}
