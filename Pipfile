@@ -15,6 +15,7 @@ dlib = {path = "./dlib-19.24.1-cp311-cp311-win_amd64.whl"}
 face-recognition = "*"
 django-crispy-forms = "*"
 crispy-bootstrap5 = "*"
+django-widget-tweaks = "*"
 
 [dev-packages]
 

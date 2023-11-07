@@ -1,5 +1,6 @@
 {% extends "admins/admin_dashboard.html" %}
 {% load static %}
+{% load widget_tweaks %}
 
 {% block title %}
     Mahindra: Admin Register
@@ -37,62 +38,66 @@
                 </div>    
             </div>
             
-            <div class="row">
-                <div class="col d-flex justify-content-center flex-column align-items-center">
-                    <div class="d-flex flex-column">
-                        {{form1.userid.label}}:
-                        {{form1.userid}}
+            <div class="row justify-content-center ">
+                <div class="col-sm-12 col-lg d-flex justify-content-center flex-column align-items-center gap-2">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-person-badge"></i>
+                        {% render_field form1.userid placeholder="Employee ID" class+="form-control" %}
                     </div>
 
-                    <div class="d-flex flex-column ">
-                        {{form1.age.label}}:
-                        {{form1.age}}
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="bi bi-check2-circle"></i>
+                        {% render_field form1.age placeholder="Age" class+="form-control" %}
                     </div>
 
-                    <div class="d-flex flex-column ">
-                        {{form1.gender.label}}:
-                        {{form1.gender}}
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-gender-ambiguous"></i>
+                        {% render_field form1.gender class+="form-control" %}
                     </div>
 
-                    <div class="d-flex flex-column ">
-                        {{form1.address.label}}:
-                        {{form1.address}}
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="bi bi-geo-alt"></i>
+                        {% render_field form1.address placeholder="Address" class+="form-control" %} 
                     </div>
-                    <div class="d-flex flex-column ">
-                        {{form1.occupation.label}}:
-                        {{form1.occupation}}
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="bi bi-pc-display-horizontal"></i>
+                        {% render_field form1.occupation placeholder="Occupation" class+="form-control" %}
                     </div>
-                
+
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-person-workspace"></i>
+                        {% render_field form1.department placeholder="Department" class+="form-control" %}  
+                    </div>
                  
 
                     
                  
                 </div>
-                <div class="col d-flex justify-content-center flex-column align-items-center">
+                <div class="col-sm-12 col-lg d-flex justify-content-center flex-column align-items-center gap-3">
 
-                    <div class="d-flex flex-column ">
-                        {{form1.first_name.label}}:
-                        {{form1.first_name}}
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="bi bi-person-video"></i>
+                        {% render_field form1.first_name placeholder="First Name" class+="form-control" %}  
                     </div>
 
-                    <div class="d-flex flex-column ">
-                        {{form1.last_name.label}}:
-                        {{form1.last_name}}
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="bi bi-person-vcard"></i>
+                        {% render_field form1.last_name placeholder="Last Name" class+="form-control" %}  
                     </div>
                 
-                    <div class="d-flex flex-column ">
-                        {{form.username.label}}:
-                        {{form.username}}
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="bi bi-person-add"></i>
+                        {% render_field form.username placeholder="Username" class+="form-control" %}  
                     </div>
 
-                    <div class="d-flex flex-column ">
-                        {{form.password1.label}}:
-                        {{form.password1}}
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="bi bi-check-square"></i>
+                        {% render_field form.password1 placeholder="Password" class+="form-control" %}  
                     </div>
 
-                    <div class="d-flex flex-column ">
-                        {{form.password2.label}}:
-                        {{form.password2}}
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="bi bi-check-circle"></i>
+                        {% render_field form.password2 placeholder="Confirm Password" class+="form-control" %} 
                     </div>
 
                 </div>
@@ -100,18 +105,11 @@
 
             </div> <!-- end of 2nd row -->
 
-            <div class="row text-center"> 
+            <div class="row text-center mt-2"> 
                 <div class="col d-flex justify-content-center flex-column align-items-center">
-                    <div class="d-flex flex-column ">
-                        {{form1.department.label}}:
-                        {{form1.department}}
-                    </div> 
-                </div>
-
-                <div class="col d-flex justify-content-center flex-column align-items-center">
-                    <div class="d-flex flex-column">
-                        {{form2.photo.label}}:
-                        {{form2.photo}}
+                    <div class="d-flex align-items-center gap-2 ">
+                        <i class="bi bi-file-image"></i>
+                        {% render_field form2.photo placeholder="Photo" class+="form-control" %} 
                     </div> 
                 </div>
             </div> <!-- end of 3rd row -->

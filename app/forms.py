@@ -12,7 +12,6 @@ class ExtendUserForm(forms.ModelForm):
         fields = ['userid', 'age', 'gender', 'address', 'department', 'occupation', 'first_name', 'last_name']
 
 
-
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = User
