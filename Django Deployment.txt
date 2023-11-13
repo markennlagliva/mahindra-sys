@@ -28,6 +28,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
-# Whenever an asssets were added
+# Run when new assets were added
 python3 manage.py collectstatic 
 
