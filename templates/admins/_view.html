@@ -48,11 +48,11 @@
 
                     {% for attendance in myFilter.qs %}
                     <tr>
-                      <td>{{attendance.date}}</td>
-                      <td>{{attendance.timein}}</td>
-                      <td>{{attendance.timeout}}</td>
-                      <td>{{attendance.total_hours}}</td>
-                      <td>{{attendance.overtime}}</td>
+                      <td class="fst-italic">{{attendance.date}}</td>
+                      <td class="fst-italic">{{attendance.timein}}</td>
+                      <td class="fst-italic">{{attendance.timeout}}</td>
+                      <td class="fst-italic">{{attendance.total_hours}}</td>
+                      <td class="fst-italic">{{attendance.overtime}}</td>
                     </tr>
                     {% endfor %}
 
