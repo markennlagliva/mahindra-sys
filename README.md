@@ -17,10 +17,12 @@ Software Engineering 2
 - cmake <br>
 - dlib {specified version needed} <br>
 - face_recognition <br>
+- django-widget-tweaks <br>
 
 # Technologies used
 - Html <br>
 - CSS <br>
+- JS <br>
 - Bootstrap <br>
 - Python (Django) <br>
 - Mysql <br>
