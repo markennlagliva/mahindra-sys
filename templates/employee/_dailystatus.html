@@ -20,13 +20,16 @@
             </div>
         </div> -->
 
-        <div class="col min-vh-100 d-flex justify-content-center align-items-center flex-column">
+
+        <!-- First Row -->
+
+        <div class="col-lg-6 min-vh-100 d-flex justify-content-center align-items-center flex-column">
             <div class="row pt-5 mb-2">
                 <div class="bg-success p-2 text-white fst-italic rounded rounded-2"><i class="bi bi-person-video2"></i> Attendance</div> 
             </div>
             <div class="row">
                 <div class="text-center">
-                    <video id="video-element" class="rounded rounded-5 img-"  autoplay="true"></video>
+                    <video id="video-element" class="rounded rounded-5 img-fluid"  autoplay="true"></video>
                 </div>
                 
                 <div id="img-element" class="text-center"></div>
@@ -37,6 +40,29 @@
                 </div>       
             </div>
 
+        </div>
+
+        <!-- This is Second Row  -->
+        <div class="col-lg-6">
+            <div class="text-center">
+                <p class="btn btn-success"><i class="bi bi-calendar-check"></i> Attendance Checker </p>
+                <table class="table table-bordered table-success">
+                    <tr>
+                        <th><i class="bi bi-calendar-heart"></i> Date</th>
+                        <th><i class="bi bi-box-arrow-in-down"></i> Time In</th>
+                        <th><i class="bi bi-box-arrow-in-up"></i> Time Out</th>
+                    </tr>
+                    {% for attendance in user_attendance_info %}
+                    <tr>
+                        <td class="fst-italic">{{attendance.date}}</td>
+                        <td class="fst-italic">{{attendance.timein}}</td>
+                        <td class="fst-italic">{{attendance.timeout}}</td>
+                        
+                    </tr>
+                    {% endfor %}
+                </table>
+               
+            </div>
         </div>
     </div>
 

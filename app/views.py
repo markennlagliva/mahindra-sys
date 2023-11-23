@@ -308,7 +308,12 @@ def employee_edit_profile(request):
 @login_required(login_url='home')
 @allowed_users(allowed_roles=['employee'])
 def face_recognition(request):
+    from datetime import datetime
+    forDate = datetime.now()
+    current_date = forDate.date() # For Date
     
+    user_attendance_info = Attendance.objects.filter(employee_name=request.user, date__lte=current_date).order_by('-date')[:5]
+    context = {'user_attendance_info': user_attendance_info}
     if is_ajax(request):
         
         photo = request.POST.get('photo')
@@ -418,7 +423,8 @@ def face_recognition(request):
 
         
     else:
-        return render(request, 'employee/_dailystatus.html')
+        print(user_attendance_info)
+        return render(request, 'employee/_dailystatus.html', context)
 
 @login_required(login_url='home')
 @allowed_users(allowed_roles=['employee'])
