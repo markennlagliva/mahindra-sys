@@ -2,7 +2,7 @@ from django.db import models
 from profiles.models import Profile
 from django.contrib.auth.models import User
 from app.models import ExtendUser
-
+from datetime import time
 
 
 # Create your models here.
@@ -22,7 +22,7 @@ class Attendance(models.Model):
     employee_name = models.CharField(max_length=100)
     date = models.DateField(null=True, blank=True)
     timein = models.TimeField(null=False, default='00:00:00') # accepts %H:%M:%S
-    timeout = models.TimeField(null=False, default='00:00:00') # accepts %H:%M:%S
+    timeout = models.TimeField(default=time(0,0,0)) # accepts %H:%M:%S
     total_hours = models.IntegerField(null=False, default='0')
     overtime = models.IntegerField(null=False, default='0')
     month = models.IntegerField(
