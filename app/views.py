@@ -95,7 +95,9 @@ def register_admin(request):
         form2 = CreateProfileForm(request.POST, request.FILES)
         if form.is_valid() and form1.is_valid() and form2.is_valid():
             user = form.save()
-           
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
             username = form.cleaned_data.get('username')
             age = form1.cleaned_data.get('age')
             userid = form1.cleaned_data.get('userid')
@@ -121,8 +123,9 @@ def register_admin(request):
             obj.save()
 
             group = Group.objects.get(name='admin')
-            user.groups.add(group)
-
+            employee_author = Group.objects.get(name='employee')
+            user.groups.add(group, employee_author)
+   
             obj_photo = Profile.objects.get(user=userdb.pk)
             print('This is the user:', obj_photo)
             obj_photo.photo = photo
@@ -217,7 +220,7 @@ def edit_profile(request):
 @allowed_users(allowed_roles=['admin'])
 @admin_only
 def search_employee(request):
-    #WORK RIGHT HERE......
+ 
     # DO AS WELL TO User DB to access name and lastname
     employee_info = ExtendUser.objects.all()
     users = User.objects.all()
@@ -267,11 +270,15 @@ def view_employee(request, first_name, last_name, pk):
   
   
     # for attendance in attendances:
-    #     print(attendance.date)
-    #     print(attendance.timein)
-    #     print(attendance.timeout)
-    #     print(attendance.total_hours)
-    #     print(attendance.overtime)
+    # # #     print(attendance.date)
+    # # #     print(attendance.timein)
+    # #     print(attendance.timeout, type(attendance.timeout))
+    #     res = str(attendance.timeout)
+    # #     if str(attendance.timeout) == '00:00:00':
+    # #         attendance.timeout = '0'
+    # #         attendance.save()
+    # #     print(attendance.total_hours)
+    # #     print(attendance.overtime)
     
     context = {'employee' : employee_info, 'attendances' : attendances, 'myFilter' : myFilter}
     return render(request, 'admins/_view.html', context)
@@ -313,7 +320,7 @@ def face_recognition(request):
     current_date = forDate.date() # For Date
     
     user_attendance_info = Attendance.objects.filter(employee_name=request.user, date__lte=current_date).order_by('-date')[:5]
-    context = {'user_attendance_info': user_attendance_info}
+
     if is_ajax(request):
         
         photo = request.POST.get('photo')
@@ -336,16 +343,17 @@ def face_recognition(request):
         currentDate = datetime.now()
         date = currentDate.date() # For Date
         time = currentDate.time() # For Time
-        status = time.strftime('%p')
+        # status = time.strftime('%p')
+        status = 'AM'
         # status = 'PM'
+        # work right here
         if user_exists: #True
             
             def check(employee,date):
                 if status == 'AM':
-                    time_in = time.strftime('%H:%M:%S')
-                    # time_in = '08:00:00'
+                    # time_in = time.strftime('%H:%M:%S')
+                    time_in = '08:00:00'
                     formatted_time_12h = time.strftime('%I:%M %p') #render logic
-                    # time_in = '8:00:00' #Example for Morning
                 
                     obj_check = Attendance.objects.filter(employee_name=employee, date=date)
                     print('Total user log in Today:', len(obj_check))
@@ -362,7 +370,8 @@ def face_recognition(request):
                         obj.save()  
                         return JsonResponse({'success': True})
                 else:
-                    time_out = time.strftime('%H:%M:%S')
+                    # time_out = time.strftime('%H:%M:%S')
+                    time_out = '17:00:00'
                     formatted_time_12h = time.strftime('%I:%M %p') #render logic
                     print(formatted_time_12h)
 
@@ -422,9 +431,8 @@ def face_recognition(request):
             return JsonResponse({'success': False})
 
         
-    else:
-        print(user_attendance_info)
-        return render(request, 'employee/_dailystatus.html', context)
+    else: 
+        return render(request, 'employee/_dailystatus.html',  {'user_attendance_info': user_attendance_info})
 
 @login_required(login_url='home')
 @allowed_users(allowed_roles=['employee'])

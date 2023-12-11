@@ -56,7 +56,11 @@
                     <tr>
                         <td class="fst-italic">{{attendance.date}}</td>
                         <td class="fst-italic">{{attendance.timein}}</td>
-                        <td class="fst-italic">{{attendance.timeout}}</td>
+                        {% if attendance.timeout|stringformat:"s" == '00:00:00' %}
+                            <td class="fst-italic"></td>
+                        {% else %}
+                            <td class="fst-italic">{{attendance.timeout}}</td>
+                        {% endif %}
                         
                     </tr>
                     {% endfor %}
