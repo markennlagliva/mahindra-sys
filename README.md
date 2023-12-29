@@ -2,6 +2,8 @@
 Developing Simple Face Recognition Attendance System <br>
 Software Engineering 2 
 
+<img src="https://github.com/markennlagliva/backendfolio/blob/main/static/assets/project-1.png" height="300" width="500" />
+
 ✅ Connected with Database (MySql) <br>
 ✅ Static Files configured <br>
 ✅ Connected with Bootstrap 5 Framework <br>
